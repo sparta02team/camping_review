@@ -16,3 +16,5 @@ def create_app(database_name='sparta'):
 
     from .views import main
     app.register_blueprint(main.bp)
+
+    return app
