@@ -1,3 +1,4 @@
+import datetime
 from flask import Blueprint, request, jsonify
 import hashlib
 from app import db
@@ -28,7 +29,25 @@ def api_register():
     db.user.insert_one({'id': id, 'pw': pw_hash, 'nickname': nickname, 'email': email})
     return jsonify({'result': 'success'})
 
-# 리뷰작성 API
 
+# 리뷰작성 API
+# 추천수 api 따로 만들어야함
+# 조회수는 리뷰 게시글 화면을 불러들이는 api 에서 조회수 증가기능 추가
+@bp.route('/writeReview', methods=['POST'])
+def api_write_review():
+    # 리뷰 작성 페이지에서 건내온 데이터 변수 설정
+    review_user_no = request.form['review_user_no']  # 게시글 번호
+    review_title = request.form['review_title']  # 게시글 제목
+    review_no = request.form['review_no']  # 회원번호
+    review_write = request.form['review_write']  # 게시글 내용
+    review_date = datetime.datetime.utcnow()  # 등록일자
+    review_gets = 1  # 게시글 조회수
+    review_hits = 0  # 게시글 추천수
+
+    # db insert
+    db.reviews.insert_one(
+        {'user_no': review_user_no, 'title': review_title, 'date': review_date, 'review_no': review_no,
+         'write': review_write, 'gets': review_gets, 'hits': review_hits})
+    return jsonify({'result': 'success'})
 
 # 댓글작성 API

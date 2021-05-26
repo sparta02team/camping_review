@@ -31,3 +31,26 @@ def test_register(client):
     assert user['pw'] != 'test'
     pw_hash = hashlib.sha256('test'.encode()).hexdigest()
     assert user['pw'] == pw_hash
+
+
+# 리뷰 게시글 작성 api
+def test_write_review(client):
+    data = {
+        'review_user_no': '1',
+        'review_title': 'test',
+        'review_no': '1',
+        'review_write': 'reviewtest'
+
+    }
+
+    response = client.post(
+        '/api/writeReview',
+        data=data
+    )
+
+    assert response.status_code == 200
+    assert response.json['result'] == 'success'
+
+    review = db.reviews.find_one({'user_no': '1'})
+
+    assert review['write'] == 'reviewtest'
