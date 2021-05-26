@@ -5,7 +5,7 @@ client = MongoClient('localhost', 27017)
 db = None
 
 
-def create_app(database_name='sparta'):
+def create_app(database_name='camping_review'):
     # 플라스크 웹 서버 생성하기
     app = Flask(__name__)
     app.debug = True
@@ -14,7 +14,8 @@ def create_app(database_name='sparta'):
     global db
     db = client.get_database(database_name)
 
-    from .views import main
+    from .views import main, api
     app.register_blueprint(main.bp)
+    app.register_blueprint(api.bp)
 
     return app
