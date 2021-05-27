@@ -55,4 +55,22 @@ def test_write_review(client):
 
     assert review['write'] == 'reviewtest'
 
+
 # 댓글 작성 테스트 api
+def test_comment(client):
+    data = {
+        'comment_no_give': '3',
+        'comment_review_no_give': '2',
+        'comment_user_no_give': '4',
+        'comment_write_give': 'test'
+    }
+
+    response = client.post(
+        '/api/comment',
+        data=data
+    )
+    assert response.status_code == 200
+    assert response.json['result'] == 'success'
+
+    comment = db.comment.find_one({'comment_no': '3'})
+    assert comment['comment_write'] == 'test'
