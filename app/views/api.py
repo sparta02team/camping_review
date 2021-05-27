@@ -36,10 +36,10 @@ def api_register():
 @bp.route('/writeReview', methods=['POST'])
 def api_write_review():
     # 리뷰 작성 페이지에서 건내온 데이터 변수 설정
-    review_user_no = request.form['review_user_no']  # 게시글 번호
-    review_title = request.form['review_title']  # 게시글 제목
-    review_no = request.form['review_no']  # 회원번호
-    review_write = request.form['review_write']  # 게시글 내용
+    review_user_no = request.form['review_user_no_give']  # 게시글 번호
+    review_title = request.form['review_title_give']  # 게시글 제목
+    review_no = request.form['review_no_give']  # 회원번호
+    review_write = request.form['review_write_give']  # 게시글 내용
     review_date = datetime.datetime.utcnow()  # 등록일자
     review_gets = 1  # 게시글 조회수
     review_hits = 0  # 게시글 추천수
@@ -50,4 +50,19 @@ def api_write_review():
          'write': review_write, 'gets': review_gets, 'hits': review_hits})
     return jsonify({'result': 'success'})
 
+
 # 댓글작성 API
+@bp.route('/comment', methods=['POST'])
+def api_comment():
+    # 댓글 작성창에서 건내온 데이터 변수 설정
+    comment_no = request.form['comment_no_give']  # 코멘트번호
+    comment_review_no = request.form['comment_review_no_give']  # 게시글번호
+    comment_user_no = request.form['comment_user_no_give']  # 회원번호
+    comment_write = request.form['comment_write_give']  # 코멘트 내용
+    comment_date = datetime.datetime.utcnow()  # 등록일자
+
+    db.comment.insert_one({'comment_review_no': comment_review_no,
+                           'comment_no': comment_no, 'comment_user_no': comment_user_no, 'comment_write': comment_write,
+                           'comment_date': comment_date})
+
+    return jsonify({'result': 'success'})

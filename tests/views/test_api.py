@@ -33,7 +33,7 @@ def test_register(client):
     assert user['pw'] == pw_hash
 
 
-# 리뷰 게시글 작성 api
+# 리뷰 게시글 작성 테스트 api
 def test_write_review(client):
     data = {
         'review_user_no': '1',
@@ -54,3 +54,5 @@ def test_write_review(client):
     review = db.reviews.find_one({'user_no': '1'})
 
     assert review['write'] == 'reviewtest'
+
+# 댓글 작성 테스트 api
