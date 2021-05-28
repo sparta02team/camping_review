@@ -25,3 +25,13 @@
     * 회원번호 (comment_user_no)
     * 등록일자 (comment_date)
     * 코맨트 내용  (comment_write)
+
+![img2.png](img2.png)
+  
+* 캠핑장
+    * 캠핑장 이름 (campsite_name)
+    * 캠핑장 분류 (category)
+    * 캠핑장 주소 (address)
+    * 캠핑장 도로명 주소 (road_address) 
+    * 링크 (link)
+  
