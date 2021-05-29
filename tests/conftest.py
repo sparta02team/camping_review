@@ -1,7 +1,7 @@
 import pytest
 from pymongo import MongoClient
 import app as flask_app
-test_database_name = 'spartatest'
+test_database_name = 'camping_review_test'
 client = MongoClient('localhost', 27017)
 db = client.get_database(test_database_name)
 
