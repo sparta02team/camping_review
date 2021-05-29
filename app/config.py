@@ -7,4 +7,4 @@ load_dotenv()
 # 환경변수 읽어오기
 JWT_SECRET = os.environ['JWT_SECRET']
 CLIENT_ID = os.environ['CLIENT_ID']
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
+#CLIENT_SECRET = os.environ['CLIENT_SECRET']
