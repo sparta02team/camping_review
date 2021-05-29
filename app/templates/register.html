@@ -15,23 +15,20 @@
             crossorigin="anonymous"></script>
 
     <script>
-        function register()
-        {
+        // function register()
+        // {
+        //     console.log($('#user_id').val(), $('#userpw').val(), $('#user_nickname').val(), $('#userEmail').val())
+
+        function register() {
             $.ajax({
                 type: "POST",
                 url: "/api/register",
-                data: {
-                    id_give: $('#user_id').val(), pw_give: $('#user_pw').val(),
-                    email_give: $('#user_email').val(), nickname_give: $('#user_nickname').val()
-                },
-                success: function (response)
-                {
-                    if (response['result'] == 'success')
-                    {
+                data: {id_give:$('#user_id').val(),pw_give:$('#userpw').val(), nickname_give:$('#user_nickname').val(), email_give:$('#userEmail').val()},
+                success: function (response) {
+                    if (response['result'] == 'success') {
                         alert('회원가입이 완료되었습니다.')
-                        window.location.href = '/login'
-                    } else
-                    {
+                        window.location.href = '/'
+                    } else {
                         alert(response['msg'])
                     }
                 }
@@ -45,9 +42,9 @@
 <body>
 <div>
     <p>아이디:<input type="text" id="user_id"></p>
-    <p>비밀번호:<input class="password" id="'user_pw"></p>
-    <p>닉네임:<input type="text" class="text" id="user_nickname"></p>
-    <p>이메일:<input type="email" id="'user_email"></p>
+    <p>비밀번호:<input type="password" id="userpw"></p>
+    <p>닉네임:<input type="text" id="user_nickname"></p>
+    <p>이메일:<input type="email" id="userEmail"> </p>
 </div>
 <button onclick="register()">회원가입</button>
 

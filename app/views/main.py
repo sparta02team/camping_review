@@ -8,6 +8,6 @@ def index():  # 함수 이름은 고유해야 한다
     return render_template('index.html')
 
 
-@bp.route('/register', methods=['GET'])
+@bp.route('register', methods=['GET'])
 def register():
     return render_template('register.html')
