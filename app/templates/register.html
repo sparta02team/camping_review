@@ -1,3 +1,93 @@
+<!-- templates/register.html -->
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Webpage Title -->
+    <title>Hello, world!</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script>
+        // 간단한 회원가입 함수입니다.
+        // 아이디, 비밀번호, 닉네임을 받아 DB에 저장합니다.
+        function register() {
+            let id_give = $('#userid').val()
+            if (id_give.trim() == '') {
+                alert('아이디를 제대로 입력해주세요')
+            }
+
+            let pw_give = $('#userpw').val()
+            if (pw_give.trim() == '') {
+                alert('비밀번호를 제대로 입력해주세요')
+            }
+
+            let nickname_give = $('#username').val()
+            if (nickname_give.trim() == '') {
+                alert('닉네임을 제대로 입력해주세요')
+            }
+
+            let email_give = $('#email').val()
+            if (email_give.trim() == '') {
+                alert('이메일을 제대로 입력해주세요')
+
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/register",
+                    data: {
+                        id_give: id_give,
+                        pw_give: pw_give,
+                        nickname_give: nickname_give,
+                        email_give: email_give
+                    },
+
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            alert('회원가입이 완료되었습니다.')
+                            window.location.href = '/login'
+                        } else {
+                            alert(response['msg'])
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>회원가입 페이지</h1>
+<div>
+    <div class="form-group">
+        <label for="userid">ID</label>
+        <input type="text" class="form-control" id="userid" aria-describedby="emailHelp" placeholder="My ID">
+    </div>
+    <div class="form-group">
+        <label for="userpw">PW</label>
+        <input type="password" class="form-control" id="userpw" placeholder="My Password">
+    </div>
+    <div class="form-group">
+        <label for="username">Nickname</label>
+        <input type="text" class="form-control" id="username" placeholder="My Nickname">
+    </div>
+    <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" class="form-control" id="email" placeholder="My E-mail">
+    </div>
+    <button class="btn btn-primary" onclick="register()">회원가입</button>
+</div>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +137,5 @@
     <p>이메일:<input type="email" id="userEmail"> </p>
 </div>
 <button onclick="register()">회원가입</button>
-
-
 </body>
 </html>

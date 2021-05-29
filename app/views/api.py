@@ -1,7 +1,8 @@
 import datetime
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, current_app, request, jsonify
 import hashlib
 from app import db
+import jwt
 
 # 블루프린트
 bp = Blueprint(
@@ -28,6 +29,31 @@ def api_register():
     # db insert
     db.user.insert_one({'id': id, 'pw': pw_hash, 'nickname': nickname, 'email': email})
     return jsonify({'result': 'success'})
+
+
+# 로그인 API
+@bp.route('/login', methods=['POST'])
+def api_login():
+    id = request.form['id_give']
+    pw = request.form['pw_give']
+
+    pw_hash = hashlib.sha256(pw.encode()).hexdigest()
+
+    user = db.user.find_one({'id': id, 'pw': pw_hash}, {'_id': False})
+
+    if user:
+        expiration_time = datetime.timedelta(hours=1)
+        payload = {
+            'id': id,
+            # 발급시간으로부터 1시간동안 JWT 유효
+            'exp': datetime.datetime.utcnow() + expiration_time
+        }
+        token = jwt.encode(payload, current_app.config['JWT_SECRET'])
+
+        return jsonify({'result': 'success', 'token': token})
+
+    else:
+        return jsonify({'result': 'fail', 'msg': '로그인에 실패하였습니다.'})
 
 
 # 리뷰작성 API
