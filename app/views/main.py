@@ -27,4 +27,3 @@ def register():
 @bp.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
-  
