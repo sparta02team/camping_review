@@ -7,7 +7,19 @@ client = MongoClient('localhost', 27017)
 db = client.get_database(test_database_name)
 
 
-# 회원가입 API 테스트
+def test_login(client):
+    user = db.user.find_one({'id': 'tester01'}, {'_id': False})
+    data = {
+        'id_give': 'test',
+        'pw_give': 'test1'
+    }
+    response = client.post(
+        '/api/login',
+        data=data
+    )
+    assert response.status_code == 200  # 회원가입 API 테스트
+
+
 def test_register(client):
     data = {
         'id_give': 'tester01',
