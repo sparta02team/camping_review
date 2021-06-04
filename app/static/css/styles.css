@@ -3840,6 +3840,7 @@ textarea.form-control-lg {
 }
 
 .nav {
+  float: right;
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -10923,6 +10924,6 @@ header.masthead h1, header.masthead .h1 {
 }
 
 footer.footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }

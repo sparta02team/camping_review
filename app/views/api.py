@@ -12,7 +12,6 @@ bp = Blueprint(
 )
 
 
-# 데이터 베이스 연결
 
 # 회원가입 API
 @bp.route('/register', methods=['POST'])

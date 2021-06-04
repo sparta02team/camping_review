@@ -14,9 +14,10 @@ def create_app(database_name='camping_review'):
     global db
     db = client.get_database(database_name)
 
-    from app.views import main, api, camping_data
+    from app.views import main, api, user, camping_data
     app.register_blueprint(main.bp)
     app.register_blueprint(api.bp)
+    app.register_blueprint(user.bp)
     app.register_blueprint(camping_data.bp)
 
     return app
