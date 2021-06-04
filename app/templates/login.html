@@ -43,29 +43,37 @@
         //     }
         // })
 
-
-
         function login() {
-            $.ajax({
-                type: "POST",
-                url: "/api/login",
-                data: {
-                    id_give: id_give,
-                    pw_give: pw_give
-                },
+            let id_give = $('#userid').val()
+            let pw_give = $('#userpw').val()
 
-                success: function (response) {
-                    if (response['result'] == 'success') {
-                        $.cookie('loginToken', response['token']);
+            if (id_give.trim() == '') {
+                alert('아이디를 제대로 입력해주세요')
+            }
 
-                        alert('로그인에 성공하였습니다!')
-                        window.location.href = '/'
-                    } else {
-                        alert(response['msg'])
+            if (pw_give.trim() == '') {
+                alert('비밀번호를 제대로 입력해주세요')
+
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    data: {id_give: id_give, pw_give: pw_give},
+
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('loginToken', response['token']);
+
+                            alert('로그인에 성공하였습니다!')
+                            window.location.href = '/'
+                        } else {
+                            alert(response['msg'])
+                        }
                     }
-                }
-            })
+                })
+            }
         }
+
     </script>
 
 </head>
@@ -92,19 +100,19 @@
         </div>
     </section>
 
-    <!-- <h1>로그인 페이지</h1>
-<div>
-    <!-- <div class="form-group">
-        <label for="userid">ID</label>
-        <input type="email" class="form-control" id="userid" aria-describedby="emailHelp" placeholder="My ID">
-    </div> -->
-    <!-- <div class="form-group">
-        <label for="userpw">PW</label>
-        <input type="password" class="form-control" id="userpw" placeholder="My Password">
-    </div>
-    <button class="btn btn-primary" onclick="login()">로그인</button>
-    <a href="/register">회원이 아니라면?</a>
-</div> -->
+{#    <h1>로그인 페이지</h1>#}
+{#    <div>#}
+{#        <div class="form-group">#}
+{#            <label for="userid">ID</label>#}
+{#            <input type="email" class="form-control" id="userid" aria-describedby="emailHelp" placeholder="My ID">#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            <label for="userpw">PW</label>#}
+{#            <input type="password" class="form-control" id="userpw" placeholder="My Password">#}
+{#        </div>#}
+{#        <button class="btn btn-primary" onclick="login()">로그인</button>#}
+{#        <a href="/register">회원이 아니라면?</a>#}
+{#    </div>#}
 </body>
 
 </html>
