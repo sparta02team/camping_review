@@ -16,7 +16,7 @@ function setUserInfo() {
     console.log(token)
 
     if (token === undefined) {
-        // window.location.href = '/login'
+        window.location.href = '/login'
     } else {
         $.ajax({
             type: "POST",

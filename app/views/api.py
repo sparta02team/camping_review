@@ -109,7 +109,6 @@ def api_register_naver():
         'exp': datetime.datetime.utcnow() + expiration_time
     }
     token = jwt.encode(payload, current_app.config['JWT_SECRET'])
-    print('token아 넘어와라', token)
     return jsonify({'result': 'success', 'token': token})
     # return render_template(template_name_or_list)
 
