@@ -9,7 +9,7 @@ bp = Blueprint(
     url_prefix='/review',  # 패스 접두사
 )
 
-review_data = {'mapx': '', 'mapy': '', 'title': '', 'address': '', 'tel': '', 'description': ''}
+review_data = {'mapx': '', 'mapy': '', 'title': '', 'address': '', 'tel': '', 'description': '', 'img': '', 'url': ''}
 
 
 @bp.route('', methods=['POST'])
@@ -34,3 +34,16 @@ def load_page():
     global review_data
     print(review_data['mapx'], review_data['mapy'])
     return jsonify({'result': 'success', 'data': review_data})
+
+
+@bp.route('/make_review', methods=['POST'])
+def make_review():
+    # review.html -> review.py로 가져온 데이터 파싱
+    user_id = request.form['user_id']
+    review_content = request.form['review_content']
+    camping_review = request.form['camping_review']
+
+    print(camping_review)
+    # 데이터들을 review게시글 db에 삽입
+
+    return jsonify({'result': 'success'})

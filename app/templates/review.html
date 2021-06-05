@@ -596,6 +596,7 @@
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=57214950732ac0e7e06b9ba035d8dc9e"></script>
     <script>
 
+        let camping_data
 
         function get_campingdata()
         {
@@ -608,18 +609,17 @@
                     {
                         if (response['result'] == 'success')
                         {
-                            let camping_data = response['data']
+                            camping_data = response['data']
                             console.log(camping_data)
                             $('#review_address').append(camping_data['address'])
                             $('#review_title').append(camping_data['title'])
                             $('#review_tel').append(camping_data['tel'])
                             $('#review_description').append(camping_data['description'])
-                            $('#review_url').attr('href',camping_data['url'])
+                            $('#review_url').attr('href', camping_data['url'])
                             // $('#review_img').attr("src", camping_data['img'])
                             // print('img:', camping_data['img'])
                             let mapX = camping_data['mapx']
                             let mapY = camping_data['mapy']
-
 
 
                             var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -647,6 +647,32 @@
                 }
             )
 
+        }
+
+        /*
+            makeReview() 함수
+            - 캠핑데이터(camping_data(dict)),사용자 아이디, 리뷰내용등을 리뷰 db에등록
+
+        */
+        function makeReview()
+        {
+            let review_content = $('#text').val()
+            let user_id = 'test_id'
+            $.ajax({
+                    type: 'POST',
+                    url: '/review/make_review',
+                    data: {camping_data, user_id, review_content},
+                    success: function (response)
+                    {
+                        if (response['result'] == 'success')
+                        {
+                            alert('리뷰 등록을 성공했습니다.')
+                            window.location.href('/')
+                        }
+                    }
+
+                }
+            )
         }
 
         $(document).ready(function ()
@@ -699,7 +725,7 @@
             </script>
             <div class="product-item-description d-flex me-auto">
                 <!-- description -->
-                <div class="bg-faded p-5 rounded" id ='review_description'><p class="mb-0"></p></div>
+                <div class="bg-faded p-5 rounded" id='review_description'><p class="mb-0"></p></div>
             </div>
             <div class="product-item-description d-flex ms-auto">
             </div>
@@ -760,7 +786,8 @@
             <div id="margin"></div>
             <textarea placeholder="이 곳의 방문 후기를 남겨주세요." id="text" name="text" rows="5"
                       style="overflow: hidden; word-wrap: break-word; resize: none; height: 300px; "></textarea>
-            <br><input id="button" type="submit" value="리뷰작성하기">
+<!--            <br><input id="button" type="submit" value="리뷰작성하기" onclick="makeReview()">-->
+              <div class="container"><p class="m-0 small" onclick="makeReview()">리뷰 작성하기 </p></div>
 
 
         </form>
