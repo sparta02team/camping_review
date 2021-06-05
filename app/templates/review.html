@@ -480,13 +480,67 @@
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=m4e6g61okh"></script>
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=m4e6g61okh&submodules=geocoder"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+    <script>
+
+
+        function get_campingdata()
+        {
+
+            $.ajax({
+                    url: '/review/load_data',
+                    type: 'POST',
+                    data: '',
+                    success: function (response)
+                    {
+                        if (response['result'] == 'success')
+                        {
+                            let camping_data = response['data']
+                            console.log(camping_data)
+                            $('#review_address').append(camping_data['address'])
+                            $('#review_title').append(camping_data['title'])
+                            let mapX = camping_data['mapx']
+                            let mapY = camping_data['mapy']
+
+
+                            console.log(mapX, mapY)
+                            let latlng = new naver.maps.Point(mapX, mapY)
+                            let latlng2 = naver.maps.TransCoord.fromTM128ToLatLng(latlng)
+
+                            console.log(latlng)
+                            console.log(latlng2)
+                            var mapOptions = {
+                                center: latlng2,
+                                zoom: 14
+                            };
+
+
+                            var map = new naver.maps.Map('map', mapOptions);
+
+                            marker = new naver.maps.Marker({
+                                map: map,
+                                position: latlng2
+                            });
+
+                        }
+                    }
+                }
+            )
+
+        }
+
+        $(document).ready(function ()
+        {
+            get_campingdata()
+        });
+    </script>
 </head>
 <body>
 <header>
     <h1 class="site-heading text-center text-faded d-none d-lg-block">
-        <span class="site-heading-upper text-primary mb-3">A Free Bootstrap Business Theme</span>
-        <span class="site-heading-lower">Business Casual</span>
+        <span class="site-heading-upper text-primary mb-3">Guro SeriesD Project</span>
+        <span class="site-heading-lower">ALONE CAMPING</span>
     </h1>
 </header>
 <!-- Navigation-->
@@ -512,8 +566,8 @@
             <div class="product-item-title d-flex">
                 <div class="bg-faded p-5 d-flex ms-auto rounded">
                     <h2 class="section-heading mb-0">
-                        <span class="section-heading-upper">서울특별시 마포구 한강난지로 28</span>
-                        <span class="section-heading-lower">난지 캠핑장</span>
+                        <span class="section-heading-upper" id="review_address"></span>
+                        <span class="section-heading-lower" id="review_title"></span>
                     </h2>
                 </div>
             </div>
@@ -523,24 +577,24 @@
                  id="map"></div>
             <script>
 
-
-                let latlng = new naver.maps.Point(300492, 552541)
-                let latlng2 = naver.maps.TransCoord.fromTM128ToLatLng(latlng)
-
-                console.log(latlng)
-                console.log(latlng2)
-                var mapOptions = {
-                    center: latlng2,
-                    zoom: 14
-                };
-
-
-                var map = new naver.maps.Map('map', mapOptions);
-
-                marker = new naver.maps.Marker({
-                    map: map,
-                    position: latlng2
-                });
+                //                console.log(mapX,mapY)
+                //                let latlng = new naver.maps.Point(mapX, mapY)
+                //                let latlng2 = naver.maps.TransCoord.fromTM128ToLatLng(latlng)
+                //
+                //                console.log(latlng)
+                //                console.log(latlng2)
+                //                var mapOptions = {
+                //                    center: latlng2,
+                //                    zoom: 14
+                //                };
+                //
+                //
+                //                var map = new naver.maps.Map('map', mapOptions);
+                //
+                //                marker = new naver.maps.Marker({
+                //                    map: map,
+                //                    position: latlng2
+                //                });
             </script>
             <div class="product-item-description d-flex me-auto">
                 <div class="bg-faded p-5 rounded"><p class="mb-0">

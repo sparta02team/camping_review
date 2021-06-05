@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -36,6 +36,19 @@
                 }
             })
         }
+
+        function to_review()
+        {
+            $.ajax({
+                type:'POST',
+                url:'/review',
+                data:{'mapx':'300492','mapy':'552541','title':'난지캠핑장','address':'서울특별시 마포구 한강난지로 28'},
+                success:function (response)
+                {
+                    window.location.href='/review'
+                }
+            })
+        }
     </script>
 </head>
 <body>
@@ -44,6 +57,7 @@
     <div class="container">
         <a class="navbar-brand" href="#!">ID | Nickname </a>
         <a class="btn btn-primary" onclick="to_register()">Sign Up</a>
+        <a class="btn btn-primary" onclick="to_review()">리뷰</a>
     </div>
 </nav>
 <!-- Masthead-->

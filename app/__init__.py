@@ -1,6 +1,7 @@
 from flask import Flask
 from pymongo import MongoClient
 
+
 client = MongoClient('localhost', 27017)
 db = None
 
@@ -14,9 +15,9 @@ def create_app(database_name='camping_review'):
     global db
     db = client.get_database(database_name)
 
-    from app.views import main, api, camping_data
+    from app.views import main, api, camping_data, review
     app.register_blueprint(main.bp)
     app.register_blueprint(api.bp)
     app.register_blueprint(camping_data.bp)
-
+    app.register_blueprint(review.bp)
     return app
