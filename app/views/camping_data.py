@@ -1,5 +1,3 @@
-import pprint
-
 import requests
 from flask import Blueprint, current_app, request, jsonify
 import time
@@ -23,9 +21,10 @@ def get_naver_result():
                'X-Naver-Client-Secret': current_app.config['CLIENT_SECRET']}
 
     data = requests.get(url, headers=headers)
-
     data = data.json()['items']
-    pprint.pprint(data)
+    # print(data)
+
+    documents = []
     if data:
         for d in data:
 

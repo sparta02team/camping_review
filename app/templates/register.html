@@ -3,13 +3,15 @@
 <html lang="en">
 <head>
     <!-- Webpage Title -->
-    <title>Hello, world!</title>
+    <title>Register</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Register CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -66,25 +68,29 @@
     </script>
 </head>
 <body>
-<h1>회원가입 페이지</h1>
-<div>
-    <div class="form-group">
-        <label for="userid">ID</label>
-        <input type="text" class="form-control" id="userid" aria-describedby="emailHelp" placeholder="My ID">
-    </div>
-    <div class="form-group">
-        <label for="userpw">PW</label>
-        <input type="password" class="form-control" id="userpw" placeholder="My Password">
-    </div>
-    <div class="form-group">
-        <label for="username">Nickname</label>
-        <input type="text" class="form-control" id="username" placeholder="My Nickname">
-    </div>
-    <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="email" class="form-control" id="email" placeholder="My E-mail">
-    </div>
-    <button class="btn btn-primary" onclick="register()">회원가입</button>
+    <section class="login-form">
+        <h1>회원가입 페이지</h1>
+        <form action="">
+            <div class="int-area">
+                <dt> <label for="userid">USER ID: </label> </dt>
+                <dd> <input type="text" class="form-control" id="userid" placeholder="My ID"> </dd>
+            </div>
+            <div class="int-area">
+                <dt> <label for="userpw">PASSWORD: </label> </dt>
+                <dd> <input type="password" class="form-control" id="userpw" placeholder="My Password"> </dd>
+            </div>
+            <div class="int-area">
+                <dt> <label for="username">NICKNAME: </label> </dt>
+                <dd> <input type="text" class="form-control" id="username" placeholder="My Nickname"> </dd>
+            </div>
+            <div class="int-area">
+                <dt> <label for="email">E-MAIL: </label> </dt>
+                <dd> <input type="email" class="form-control" id="email" placeholder="My E-mail"> </dd>
+            </div>
+            <div class="btn-area">
+                <button class="btn btn-primary" onclick="register()">회원가입</button>
+            </div>
+    </section>
 </div>
 </body>
 </html>
