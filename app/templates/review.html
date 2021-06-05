@@ -467,6 +467,115 @@
     .fad.fa-inverse {
         color: #fff
     }</style>
+
+    <!-- 리뷰 텍스트 area style -->
+    <style>
+        * {
+            outline: none;
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            font-family: Courier, monospace;
+        }
+
+        body {
+            background: #333 url(https://static.tumblr.com/maopbtg/a5emgtoju/inflicted.png) repeat;
+        }
+
+        #paper {
+            color: #FFF;
+            font-size: 20px;
+        }
+
+        #margin {
+            margin-left: 12px;
+            margin-bottom: 20px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
+        #text {
+            width: 500px;
+            overflow: hidden;
+            background-color: #FFF;
+            color: #222;
+            font-family: Courier, monospace;
+            font-weight: normal;
+            font-size: 24px;
+            resize: none;
+            line-height: 40px;
+            padding-left: 100px;
+            padding-right: 100px;
+            padding-top: 45px;
+            padding-bottom: 34px;
+            background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png), url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+            background-repeat: repeat-y, repeat;
+            -webkit-border-radius: 12px;
+            border-radius: 12px;
+            -webkit-box-shadow: 0px 2px 14px #000;
+            box-shadow: 0px 2px 14px #000;
+            border-top: 1px solid #FFF;
+            border-bottom: 1px solid #FFF;
+        }
+
+        #title {
+            background-color: transparent;
+            border-bottom: 3px solid #FFF;
+            color: #FFF;
+            font-size: 20px;
+            font-family: Courier, monospace;
+            height: 28px;
+            font-weight: bold;
+            width: 220px;
+        }
+
+        #button {
+            cursor: pointer;
+            margin-top: 20px;
+            float: right;
+            height: 40px;
+            padding-left: 24px;
+            padding-right: 24px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            color: #FFF;
+            text-shadow: 0px -1px 0px #000000;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            border-top: 1px solid #FFF;
+            -webkit-box-shadow: 0px 2px 14px #000;
+            box-shadow: 0px 2px 14px #000;
+            background-color: #62add6;
+            background-image: url(https://static.tumblr.com/maopbtg/ZHLmgtok7/button.png);
+            background-repeat: repeat-x;
+        }
+
+        #button:active {
+            zoom: 1;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+        }
+
+        #button:focus {
+            zoom: 1;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+        }
+
+        #wrapper {
+            width: 700px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 24px;
+            margin-bottom: 100px;
+        }
+    </style>
+
     <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico">
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
@@ -482,6 +591,9 @@
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=m4e6g61okh&submodules=geocoder"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+    <!-- kakao map-->
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=57214950732ac0e7e06b9ba035d8dc9e"></script>
     <script>
 
 
@@ -504,24 +616,26 @@
                             let mapY = camping_data['mapy']
 
 
-                            console.log(mapX, mapY)
-                            let latlng = new naver.maps.Point(mapX, mapY)
-                            let latlng2 = naver.maps.TransCoord.fromTM128ToLatLng(latlng)
 
-                            console.log(latlng)
-                            console.log(latlng2)
-                            var mapOptions = {
-                                center: latlng2,
-                                zoom: 14
+                            var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+                            var options = { //지도를 생성할 때 필요한 기본 옵션
+                                center: new kakao.maps.LatLng(mapX, mapY), //지도의 중심좌표.
+                                level: 3 //지도의 레벨(확대, 축소 정도)
                             };
 
+                            var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-                            var map = new naver.maps.Map('map', mapOptions);
+                            // 마커가 표시될 위치입니다
+                            var markerPosition = new kakao.maps.LatLng(mapX, mapY);
 
-                            marker = new naver.maps.Marker({
-                                map: map,
-                                position: latlng2
+                            // 마커를 생성합니다
+                            var marker = new kakao.maps.Marker({
+                                position: markerPosition,
                             });
+
+                            // 마커가 지도 위에 표시되도록 설정합니다
+                            marker.setMap(map);
+
 
                         }
                     }
@@ -539,8 +653,9 @@
 <body>
 <header>
     <h1 class="site-heading text-center text-faded d-none d-lg-block">
-        <span class="site-heading-upper text-primary mb-3">Guro SeriesD Project</span>
-        <span class="site-heading-lower">ALONE CAMPING</span>
+        <span class="site-heading-upper text-primary mb-3"><img src="../static/assets/img/Logo_Alone_camping.png" alt=""
+                                                                height="70px" style="margin-bottom: 10px"></span>
+        <span class="site-heading-lower" style="font-size: 40px">WHERE TO GO CAMPING?</span>
     </h1>
 </header>
 <!-- Navigation-->
@@ -553,9 +668,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.html">Home</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.html">About</a></li>
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.html">Reviews</a></li><!--
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="products.html">Products</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="store.html">Store</a></li>
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="store.html">Store</a></li>-->
             </ul>
         </div>
     </div>
@@ -602,32 +717,35 @@
                     총 155면으로 자갈형과 데크형으로 구성된 일반캠핑존 83면, 잔디밭에서 즐길 수 있는 프리캠핑존 36면, 글램핑존 5면과
                     바비큐존 26면, 캠프파이어존 5면, 어린이들이 놀 수 있는 실개천 등 기타 편의시설이 조성되어 쾌적하고 다양한 즐거움이 있는 서울시 대표 캠핑 명소입니다.</p></div>
             </div>
+            <div class="product-item-description d-flex ms-auto">
+            </div>
+
+        </div>
+
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="product-item">
+            <div class="product-item-title d-flex">
+                <!--                <div class="bg-faded p-5 d-flex me-auto rounded">
+                                    <h2 class="section-heading mb-0">
+                                        <span class="section-heading-upper"><a href="https://yeyak.seoul.go.kr">https://yeyak.seoul.go.kr</a></span>
+                                        <span class="section-heading-lower">TEL : 02-373-2021</span>
+                                    </h2>
+                                </div>-->
+            </div>
+            <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0"
+                 src="../static/assets/img/products-02.jpg"
+                 alt="...">
+            <div class="product-item-description d-flex ms-auto" align="right">
+                <div class="bg-faded p-5 rounded"><p class="mb-0">
+                    <h2><a href="https://yeyak.seoul.go.kr">https://yeyak.seoul.go.kr</a><br>TEL : 02-373-2021</p></h2>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-
-<!--<section class="page-section">-->
-<!--    <div class="container">-->
-<!--        <div class="product-item">-->
-<!--            <div class="product-item-title d-flex">-->
-<!--                <div class="bg-faded p-5 d-flex me-auto rounded">-->
-<!--                    <h2 class="section-heading mb-0">-->
-<!--                        <span class="section-heading-upper">Delicious Treats, Good Eats</span>-->
-<!--                        <span class="section-heading-lower">Bakery &amp; Kitchen</span>-->
-<!--                    </h2>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0"-->
-<!--                 src="../static/assets/img/products-02.jpg"-->
-<!--                 alt="...">-->
-<!--            <div class="product-item-description d-flex ms-auto">-->
-<!--                <div class="bg-faded p-5 rounded"><p class="mb-0">Our seasonal menu features delicious snacks, baked-->
-<!--                    goods, and even full meals perfect for breakfast or lunchtime. We source our ingredients from local,-->
-<!--                    oragnic farms whenever possible, alongside premium vendors for specialty goods.</p></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
 <!--<section class="page-section">-->
 <!--    <div class="container">-->
 <!--        <div class="product-item">-->
@@ -651,14 +769,24 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</section>-->
-<footer class="footer text-faded text-center py-5">
+<footer class="footer text-faded text-center py-5" text-align="center">
+    <div id="wrapper" text-align="center">
+        <form id="paper" method="get" action="" style="text-align: center">
+
+            <div id="margin"></div>
+            <textarea placeholder="이 곳의 방문 후기를 남겨주세요." id="text" name="text" rows="5"
+                      style="overflow: hidden; word-wrap: break-word; resize: none; height: 300px; "></textarea>
+            <br><input id="button" type="submit" value="리뷰작성하기">
+
+
+        </form>
+    </div>
     <div class="container"><p class="m-0 small">리뷰 작성하기 </p></div>
-    <div class="container"><p class="m-0 small">Copyright © Your Website 2021</p></div>
+    <div class="container"><p class="m-0 small">Copyright © Guro Series_d team2 Website 2021</p></div>
 </footer>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 
 
 </body>
