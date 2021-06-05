@@ -21,3 +21,4 @@ soupsieve
 toml 
 urllib3 
 Werkzeug 
+pymongo
