@@ -9,7 +9,7 @@ bp = Blueprint(
     url_prefix='/review',  # 패스 접두사
 )
 
-review_data = {'mapx': '', 'mapy': '', 'title': '', 'address': ''}
+review_data = {'mapx': '', 'mapy': '', 'title': '', 'address': '', 'tel': '', 'description': ''}
 
 
 @bp.route('', methods=['POST'])
@@ -18,8 +18,13 @@ def review_page():
     mapy = request.form['mapy']
     title = request.form['title']
     address = request.form['address']
+    tel = request.form['tel']
+    description = request.form['description']
+    img = request.form['img']
+    url = request.form['url']
     global review_data
-    review_data = {'mapx': mapx, 'mapy': mapy, 'title': title, 'address': address}
+    review_data = {'mapx': mapx, 'mapy': mapy, 'title': title, 'address': address, 'tel': tel,
+                   'description': description, 'img': img, 'url': url}
 
     return jsonify({'result': 'success', 'data': review_data})
 

@@ -612,6 +612,11 @@
                             console.log(camping_data)
                             $('#review_address').append(camping_data['address'])
                             $('#review_title').append(camping_data['title'])
+                            $('#review_tel').append(camping_data['tel'])
+                            $('#review_description').append(camping_data['description'])
+                            $('#review_url').attr('href',camping_data['url'])
+                            // $('#review_img').attr("src", camping_data['img'])
+                            // print('img:', camping_data['img'])
                             let mapX = camping_data['mapx']
                             let mapY = camping_data['mapy']
 
@@ -686,36 +691,15 @@
                     </h2>
                 </div>
             </div>
-            <!--            <div id="map" style="width:100%;height:400px;"class="mx-auto d-flex rounded mb-3 mb-lg-0"></div>-->
 
             <div style="width:150%;height:400px;" class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0"
                  id="map"></div>
             <script>
 
-                //                console.log(mapX,mapY)
-                //                let latlng = new naver.maps.Point(mapX, mapY)
-                //                let latlng2 = naver.maps.TransCoord.fromTM128ToLatLng(latlng)
-                //
-                //                console.log(latlng)
-                //                console.log(latlng2)
-                //                var mapOptions = {
-                //                    center: latlng2,
-                //                    zoom: 14
-                //                };
-                //
-                //
-                //                var map = new naver.maps.Map('map', mapOptions);
-                //
-                //                marker = new naver.maps.Marker({
-                //                    map: map,
-                //                    position: latlng2
-                //                });
             </script>
             <div class="product-item-description d-flex me-auto">
-                <div class="bg-faded p-5 rounded"><p class="mb-0">
-                    서울특별시 유일의 한강공원에서 즐길 수 있는 난지캠핑장은
-                    총 155면으로 자갈형과 데크형으로 구성된 일반캠핑존 83면, 잔디밭에서 즐길 수 있는 프리캠핑존 36면, 글램핑존 5면과
-                    바비큐존 26면, 캠프파이어존 5면, 어린이들이 놀 수 있는 실개천 등 기타 편의시설이 조성되어 쾌적하고 다양한 즐거움이 있는 서울시 대표 캠핑 명소입니다.</p></div>
+                <!-- description -->
+                <div class="bg-faded p-5 rounded" id ='review_description'><p class="mb-0"></p></div>
             </div>
             <div class="product-item-description d-flex ms-auto">
             </div>
@@ -736,11 +720,11 @@
                                 </div>-->
             </div>
             <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0"
-                 src="../static/assets/img/products-02.jpg"
-                 alt="...">
+                 src="../static/assets/img/camping_img.jpeg"
+                 alt="..." id="review_img">
             <div class="product-item-description d-flex ms-auto" align="right">
                 <div class="bg-faded p-5 rounded"><p class="mb-0">
-                    <h2><a href="https://yeyak.seoul.go.kr">https://yeyak.seoul.go.kr</a><br>TEL : 02-373-2021</p></h2>
+                    <h2><a href="" id="review_url">홈페이지 바로가기</a><br><span id="review_tel">TEL : </span></p></h2>
                 </div>
             </div>
         </div>
