@@ -1,0 +1,118 @@
+<!-- templates/login.html -->
+<!doctype html>
+<html lang="ko">
+
+<head>
+
+    <!-- Webpage Title -->
+    <title>Login</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Login CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <script>
+        // let id = $('#userid');
+        // let pw = $('#userpw');
+        // let btn = $('#loginBtn');
+
+        // $(btn).on('click', function () {
+        //     if ($(id).val() === '') {
+        //         $(id).next('label').addClass('warning');
+        //     } else if ($(pw).val() === '') {
+        //         $(pw).next('label').addClass('warning');
+        //     }
+        // })
+
+        function login() {
+            let id_give = $('#userid').val()
+            let pw_give = $('#userpw').val()
+
+            if (id_give.trim() == '') {
+                alert('아이디를 제대로 입력해주세요')
+            }
+
+            if (pw_give.trim() == '') {
+                alert('비밀번호를 제대로 입력해주세요')
+
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    data: {id_give: id_give, pw_give: pw_give},
+
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('loginToken', response['token']);
+
+                            alert('로그인에 성공하였습니다!')
+                            window.location.href = '/'
+                        } else {
+                            alert(response['msg'])
+                        }
+                    }
+                })
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <section class="login-form">
+        <h1>로그인 페이지</h1>
+        <form action="">
+            <div class="int-area">
+                <input type="text" name="id" id="userid" autocomplete="off" required>
+                <label for="userid">USER ID</label>
+            </div>
+            <div class="int-area">
+                <input type="password" name="pw" id="userpw" autocomplete="off" required>
+                <label for="userpw">PASSWORD</label>
+            </div>
+            <div class="btn-area">
+                <button id="loginBtn" onclick="login()">로그인</button>
+            </div>
+        </form>
+        <div class="caption">
+            <a href="">Forgot Password?</a>
+            <a href="{{ url_for('main.register') }}">회원이 아니라면?</a>
+        </div>
+    </section>
+
+{#    <h1>로그인 페이지</h1>#}
+{#    <div>#}
+{#        <div class="form-group">#}
+{#            <label for="userid">ID</label>#}
+{#            <input type="email" class="form-control" id="userid" aria-describedby="emailHelp" placeholder="My ID">#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            <label for="userpw">PW</label>#}
+{#            <input type="password" class="form-control" id="userpw" placeholder="My Password">#}
+{#        </div>#}
+{#        <button class="btn btn-primary" onclick="login()">로그인</button>#}
+{#        <a href="/register">회원이 아니라면?</a>#}
+{#    </div>#}
+</body>
+
+</html>
