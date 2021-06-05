@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8">
+    </script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+</head>
+
+<body>
+    <script type="text/javascript">
+        var naver_id_login = new naver_id_login("{{ CLIENT_ID }}", "{{ CALLBACK_URL }}");
+        // 접근 토큰 값 출력
+        // alert(naver_id_login.oauthParams.access_token);
+        // 네이버 사용자 프로필 조회
+        naver_id_login.get_naver_userprofile("naverSignInCallback()");
+        // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+        function naverSignInCallback() {
+            let naver_id = naver_id_login.getProfileData('id');
+
+            // 네아로 정보를 이용해 회원가입하고 JWT 쿠키에 저장
+            $.ajax({
+                type: "POST",
+                url: "/api/register/naver",
+                data: {
+                    'naver_id_give': naver_id
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
+                        // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
+                        $.cookie('loginToken', response['token']);
+
+                        alert('로그인 완료!')
+                        window.location.href = '/'
+                    } else {
+                        // 로그인이 안되면 에러메시지를 띄웁니다.
+                        alert(response['msg'])
+                    }
+                }
+            })
+            alert(naver_id_login.getProfileData('email'));
+        }
+    </script>
+</body>
+
+</html>

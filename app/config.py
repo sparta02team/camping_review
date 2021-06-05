@@ -8,3 +8,5 @@ load_dotenv()
 JWT_SECRET = os.environ['JWT_SECRET']
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
+CALLBACK_URL = os.environ['CALLBACK_URL']
+SERVICE_URL = os.environ['SERVICE_URL']
