@@ -23,6 +23,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
+    <script>
+        function to_review()
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/review',
+                data: {'mapx': '300492', 'mapy': '552541', 'title': '난지캠핑장', 'address': '서울특별시 마포구 한강난지로 28'},
+                success: function (response)
+                {
+                    window.location.href = '/review'
+                }
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -30,6 +44,7 @@
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
         <a id="user-info"></a>
+        <a class="btn btn-primary" onclick="to_review()">리뷰</a>
     </div>
 </nav>
 <!-- Masthead-->
@@ -39,12 +54,13 @@
             <div class="col-xl-6">
                 <div class="text-center text-white">
                     <!-- Page heading-->
-                    <h1 class="mb-5"> <p>나 홀로 캠핑!</p> <p>어디로 떠날까요?</p></h1>
+                    <h1 class="mb-5"><p>나 홀로 캠핑!</p>
+                        <p>어디로 떠날까요?</p></h1>
                     <!-- form-->
                     <form>
                         <div class="input-group input-group-lg">
                             <select class="form-select" id="region" type="text" aria-describedby="button-submit">
-                                <option selected> 검색할 지역을 선택하세요. </option>
+                                <option selected> 검색할 지역을 선택하세요.</option>
                                 <option value="서울시">서울시</option>
                                 <option value="부산시">부산시</option>
                                 <option value="대구시">대구시</option>
@@ -63,7 +79,9 @@
                                 <option value="전라북도">전라북도</option>
                                 <option value="제주도">제주도</option>
                             </select>
-                            <button class="btn btn-primary" id="button-submit" type="button" onclick="showArticles()">Search</button>
+                            <button class="btn btn-primary" id="button-submit" type="button" onclick="showArticles()">
+                                Search
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -143,6 +161,6 @@
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="{{ url_for('static', filename='js/scripts.js') }}" > </script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>
