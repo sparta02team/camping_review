@@ -5,7 +5,8 @@
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8">
     </script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 
 </head>
@@ -21,6 +22,10 @@
         function naverSignInCallback() {
             let naver_id = naver_id_login.getProfileData('id');
 
+            // opener.setRegisterValue(naver_id_login.oauthParams.access_token, naver_id_login.getProfileData('email'), window); 
+
+            // 상위 페이지에서 처리
+
             // 네아로 정보를 이용해 회원가입하고 JWT 쿠키에 저장
             $.ajax({
                 type: "POST",
@@ -33,16 +38,22 @@
                         // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
                         // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
                         $.cookie('loginToken', response['token']);
-
+                        console.log('쿠키쿠키쿠키', response['token']);
+                        // let snsId = naver_id_login.getProfileData('id');
+                        // let snsEmail = naver_id_login.getProfileData('email');
+                        // let snsName = snsEmail.substring(0, snsEmail.indexOf('@'));
+                        // let snsCd = 'N';
+                        // opener.addUser(snsId, snsEmail, snsName, snsCd);
                         alert('로그인 완료!')
                         window.location.href = '/'
+
                     } else {
                         // 로그인이 안되면 에러메시지를 띄웁니다.
                         alert(response['msg'])
                     }
                 }
             })
-            alert(naver_id_login.getProfileData('email'));
+            // alert(naver_id_login.getProfileData('email'));
         }
     </script>
 </body>

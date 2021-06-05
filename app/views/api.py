@@ -97,8 +97,8 @@ def api_comment():
 @bp.route('/register/naver', methods=['POST'])
 def api_register_naver():
     naver_id = request.form['naver_id_give']
+    # print(naver_id)
     print(naver_id)
-
     # 아직 가입하지 않은 naver id 케이스에서는 가입까지 처리
     if not db.user.find_one({'id': naver_id}, {'_id': False}):
         db.user.insert_one({'id': naver_id, 'pw': ''})
@@ -109,7 +109,9 @@ def api_register_naver():
         'exp': datetime.datetime.utcnow() + expiration_time
     }
     token = jwt.encode(payload, current_app.config['JWT_SECRET'])
+    print('token아 넘어와라', token)
     return jsonify({'result': 'success', 'token': token})
+    # return render_template(template_name_or_list)
 
 
 @bp.route('/naver', methods=['GET'])
