@@ -65,7 +65,7 @@ def test_register(client):
 
 #     review = db.reviews.find_one({'user_no': '1'})
 
-#     assert review['write'] == 'reviewtest'
+# #     assert review['write'] == 'reviewtest'
 
 
 # 댓글 작성 테스트 api
@@ -86,3 +86,15 @@ def test_comment(client):
 
     comment = db.comment.find_one({'comment_no': '3'})
     assert comment['comment_write'] == 'test'
+
+
+def test_api_register_naver(client):
+    data = {
+        'naver_id_give': 'test@naver.com'
+    }
+    response = client.post(
+        '/api/register/naver',
+        data=data
+    )
+    # 몽고 DB조회해서 User가
+    assert response.status_code == 200

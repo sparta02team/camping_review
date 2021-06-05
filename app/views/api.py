@@ -1,5 +1,5 @@
 import datetime
-from flask import Blueprint, current_app, request, jsonify
+from flask import Blueprint, current_app, request, jsonify, render_template
 import hashlib
 from app import db
 import jwt
@@ -10,7 +10,6 @@ bp = Blueprint(
     __name__,  # 파일 등록(현재 파일)
     url_prefix='/api',  # 패스 접두사
 )
-
 
 
 # 회원가입 API
@@ -26,7 +25,8 @@ def api_register():
     pw_hash = hashlib.sha256(pw.encode()).hexdigest()
 
     # db insert
-    db.user.insert_one({'id': id, 'pw': pw_hash, 'nickname': nickname, 'email': email})
+    db.user.insert_one(
+        {'id': id, 'pw': pw_hash, 'nickname': nickname, 'email': email})
     return jsonify({'result': 'success'})
 
 
@@ -35,7 +35,6 @@ def api_register():
 def api_login():
     id = request.form['id_give']
     pw = request.form['pw_give']
-
     pw_hash = hashlib.sha256(pw.encode()).hexdigest()
 
     user = db.user.find_one({'id': id, 'pw': pw_hash}, {'_id': False})
@@ -91,3 +90,32 @@ def api_comment():
                            'comment_date': comment_date})
 
     return jsonify({'result': 'success'})
+
+# 네이버 로그인
+
+
+@bp.route('/register/naver', methods=['POST'])
+def api_register_naver():
+    naver_id = request.form['naver_id_give']
+    print(naver_id)
+
+    # 아직 가입하지 않은 naver id 케이스에서는 가입까지 처리
+    if not db.user.find_one({'id': naver_id}, {'_id': False}):
+        db.user.insert_one({'id': naver_id, 'pw': ''})
+
+    expiration_time = datetime.timedelta(hours=1)
+    payload = {
+        'id': naver_id,
+        'exp': datetime.datetime.utcnow() + expiration_time
+    }
+    token = jwt.encode(payload, current_app.config['JWT_SECRET'])
+    return jsonify({'result': 'success', 'token': token})
+
+
+@bp.route('/naver', methods=['GET'])
+def naver_callback():
+    CLIENT_ID = current_app.config['CLIENT_ID']
+    CALLBACK_URL = current_app.config['CALLBACK_URL']
+    SERVICE_URL = current_app.config['SERVICE_URL']
+    return render_template('callback.html', CALLBACK_URL=CALLBACK_URL,
+                           CLIENT_ID=CLIENT_ID, SERVICE_URL=SERVICE_URL)
