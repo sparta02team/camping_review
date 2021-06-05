@@ -22,7 +22,6 @@
         function naverSignInCallback() {
             let naver_id = naver_id_login.getProfileData('id');
 
-            // opener.setRegisterValue(naver_id_login.oauthParams.access_token, naver_id_login.getProfileData('email'), window); 
 
             // 상위 페이지에서 처리
 
@@ -38,7 +37,6 @@
                         // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
                         // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
                         $.cookie('loginToken', response['token'], {'path': '/'});
-                        console.log('쿠키쿠키쿠키', response['token']);
                         // let snsId = naver_id_login.getProfileData('id');
                         // let snsEmail = naver_id_login.getProfileData('email');
                         // let snsName = snsEmail.substring(0, snsEmail.indexOf('@'));
