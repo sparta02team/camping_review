@@ -16,12 +16,12 @@ function setUserInfo() {
     console.log(token)
 
     if (token === undefined) {
-        window.location.href = '/login'
+        // window.location.href = '/login'
     } else {
         $.ajax({
             type: "POST",
             url: "/user",
-            headers: {'authorization': `Bearer ${token}`},
+            headers: { 'authorization': `Bearer ${token}` },
             data: {},
             success: function (response) {
                 if (response['result'] === 'success') {
@@ -42,7 +42,7 @@ function setUserInfo() {
 
 
 function logOut() {
-    $.removeCookie('loginToken', {path: '/'})
+    $.removeCookie('loginToken', { path: '/' })
     alert('로그아웃 되었습니다.')
     window.location.href = '/login'
 }
@@ -55,7 +55,7 @@ function showArticles() {
     $.ajax({
         type: "GET",
         url: "/camping_data",
-        data: {'region_give': region},
+        data: { 'region_give': region },
         success: function (response) {
             if (response["result"] == "success") {
                 let articles = response['articles']
