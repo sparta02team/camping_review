@@ -46,26 +46,26 @@ def test_register(client):
 
 
 # 리뷰 게시글 작성 테스트 api
-def test_write_review(client):
-    data = {
-        'review_user_no': '1',
-        'review_title': 'test',
-        'review_no': '1',
-        'review_write': 'reviewtest'
+# def test_write_review(client):
+#     data = {
+#         'review_user_no': '1',
+#         'review_title': 'test',
+#         'review_no': '1',
+#         'review_write': 'reviewtest'
 
-    }
+#     }
 
-    response = client.post(
-        '/api/writeReview',
-        data=data
-    )
+#     response = client.post(
+#         '/api/writeReview',
+#         data=data
+#     )
 
-    assert response.status_code == 200
-    assert response.json['result'] == 'success'
+#     assert response.status_code == 200
+#     assert response.json['result'] == 'success'
 
-    review = db.reviews.find_one({'user_no': '1'})
+#     review = db.reviews.find_one({'user_no': '1'})
 
-    assert review['write'] == 'reviewtest'
+#     assert review['write'] == 'reviewtest'
 
 
 # 댓글 작성 테스트 api
