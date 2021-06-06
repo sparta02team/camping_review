@@ -5,6 +5,7 @@ from flask import Blueprint, current_app, request, jsonify
 import time
 import html.parser
 import re
+import os
 # from app import db
 
 
@@ -51,7 +52,7 @@ def get_result():
         document['description'] = ''
 
 
-        chromedriver = current_app.config['CHROME_DRIVER']
+        chrome_driver = os.path.join('chromedriver')
         options = webdriver.ChromeOptions()
         options.add_argument("headless")
         driver = webdriver.Chrome(chromedriver, options=options)
