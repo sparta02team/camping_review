@@ -43,4 +43,4 @@ jobs:
           MONGODB_HOST: "mongodb://localhost:27017"
           REST_API: ${{ secrets.REST_API }}
         run: |
-          pytest
+          poetry run pytest
