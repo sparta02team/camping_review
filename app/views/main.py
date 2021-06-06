@@ -34,3 +34,9 @@ def login():
     CALLBACK_URL = current_app.config['CALLBACK_URL']
     SERVICE_URL = current_app.config['SERVICE_URL']
     return render_template('login.html', CLIENT_ID=CLIENT_ID, CALLBACK_URL=CALLBACK_URL, SERVICE_URL=SERVICE_URL)
+
+    return render_template('login.html')
+
+@bp.route('/review',methods=['GET'])
+def review():
+    return render_template('review.html')
