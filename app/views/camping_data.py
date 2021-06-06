@@ -44,6 +44,37 @@ def get_result():
 
             documents.append(document)
 
+    for document in documents:
+        url = document['link']
+        document['tag'] = []
+        document['image'] = ''
+        document['description'] = ''
+
+
+        chromedriver = current_app.config['CHROME_DRIVER']
+        options = webdriver.ChromeOptions()
+        options.add_argument("headless")
+        driver = webdriver.Chrome(chromedriver, options=options)
+        driver.get(url)
+        driver.implicitly_wait(0.3)
+
+        try:
+            tags = driver.find_elements_by_xpath("//a[contains(text(),'#') and @class='link_tag']")
+            for tag in tags:
+                document['tag'].append(tag.text)
+
+            image = driver.find_element_by_css_selector('a.link_photo').get_attribute('style')
+            # action = ActionChains(driver)
+            # action.move_to_element(image).perform()
+            document['image'] = image.split('background-image: url("')[1][:-3]
+
+            description = driver.find_element_by_css_selector('p.txt_introduce')
+            document['description'] = description.text
+
+        except:
+            pass
+
+        driver.close()
 
 
     return jsonify({'result': 'success',
