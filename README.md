@@ -33,7 +33,11 @@
 * 캠핑장
     * 캠핑장 이름 (campsite_name)
     * 캠핑장 분류 (category)
+    * 캠핑장 전화번호 (phone)
     * 캠핑장 주소 (address)
     * 캠핑장 도로명 주소 (road_address) 
     * 링크 (link)
-  
+    * 이미지 주소 (image)
+    * 태그 (tag)
+    * 상세설명 (description)
+    * 지도 좌표 (x, y)  

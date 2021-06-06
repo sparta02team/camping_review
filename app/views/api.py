@@ -1,5 +1,6 @@
 import datetime
-from flask import Blueprint, current_app, request, jsonify, render_template
+from flask import Blueprint, current_app, request, jsonify, render_template, url_for
+from werkzeug.utils import redirect
 import hashlib
 from app import db
 import jwt
@@ -27,10 +28,12 @@ def api_register():
     # db insert
     db.user.insert_one(
         {'id': id, 'pw': pw_hash, 'nickname': nickname, 'email': email})
+    user = db.user.find_one({'id': id, 'pw': pw_hash}, {'_id': False})
     return jsonify({'result': 'success'})
 
-
 # 로그인 API
+
+
 @bp.route('/login', methods=['POST'])
 def api_login():
     id = request.form['id_give']
