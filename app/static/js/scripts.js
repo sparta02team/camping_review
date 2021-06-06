@@ -11,6 +11,19 @@ $(document).ready(function () {
 });
 
 
+$(document).ajaxStart(function() {
+    //로딩 중 마우스 커서를 변경
+    alert('로딩 중입니다. 잠시만 기다려주세요');
+    $('html').css("cursor", "wait");
+});
+
+
+$(document).ajaxStop(function() {
+    //로딩이 끝나면 마우스 커서를 원래대로
+    $('html').css("cursor", "auto");
+});
+
+
 function setUserInfo() {
     let userInfo = $('#user-info')
     let token = $.cookie('loginToken')
