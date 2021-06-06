@@ -21,7 +21,7 @@ def get_result():
 
     time.sleep(0.1)
 
-    url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=10".format(region)
+    url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
     headers = {"Authorization": "KakaoAK " + current_app.config['REST_API']}
 
     data = requests.get(url, headers=headers)
