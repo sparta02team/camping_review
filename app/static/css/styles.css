@@ -4381,14 +4381,14 @@ h1 {
 .icon-comment {
     width: 25px;
     height: 17px;
-	background: url("../assets/img/write_comment.png") no-repeat;
+	background: url("../assets/img/write_comment.jpg") no-repeat;
 }
 
 .icon-comments_count {
 	margin-left: 10px;
 	width: 25px;
     height: 17px;
-	background: url("../assets/img/comment.png") no-repeat;
+	background: url("../assets/img/comment.jpg") no-repeat;
 }
 
 .card > .list-group {
@@ -7105,6 +7105,11 @@ h1 {
 
 .mb-5 {
   margin-bottom: 3rem !important;
+
+}
+
+h1.mb-5 {
+  color: white;
 }
 
 .mb-auto {
