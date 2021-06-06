@@ -1,16 +1,16 @@
-atomicwrites @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/ca/84/dd/000dbc2864acca52a74a82da8b597c9e4778eb3fe64687a31a8095ad5f/atomicwrites-1.4.0-py2.py3-none-any.whl
-attrs @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/1a/aa/39/10d6d07084f186f8cf6963cb033440402ad5088bb94d712239170f2ef6/attrs-21.2.0-py2.py3-none-any.whl
-beautifulsoup4 @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/e0/38/d7/f9b232f345b5354d13487afd553ef917480088fda47bb62e056a3a7924/beautifulsoup4-4.9.3-py3-none-any.whl
+atomicwrites 
+attrs 
+beautifulsoup4 
 bs4==0.0.1
-certifi @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/a5/b1/71/0fb759c6550e4dc0a538f0fc47cdf7dcd23bae70385241ee92b4d5b87c/certifi-2020.12.5-py2.py3-none-any.whl
-chardet @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/47/b7/82/19c2b887f87f3adbaf4e34c55189388e5132c78f6929d7001a78b0209b/chardet-4.0.0-py2.py3-none-any.whl
-click @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/e5/58/8a/d84fb75fd9855ec843f116601e7167ac4978327b724094fd000f2736e0/click-8.0.1-py3-none-any.whl
-colorama @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/b0/f3/a3/cf94f06cbe1d286a25116cfe54d5a75cb1c4b54d15b2b1b4fc03a7f657/colorama-0.4.4-py2.py3-none-any.whl
-Flask @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/2e/a3/f8/fd1ce322eef1a5dc755e745210f2e85d51e0bc1332f55aa0a6f0ace47f/Flask-2.0.1-py3-none-any.whl
-gunicorn @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/eb/33/9c/43e158642e15413395d933fef80bb16fa6b50a6ed8dd157f506b6b2c03/gunicorn-20.1.0-py3-none-any.whl
-idna @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/9e/f9/03/6066b92d35486e7f0d4f310126e3c60a6619726e43ef98e32e105b5c52/idna-2.10-py2.py3-none-any.whl
-iniconfig @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/ac/f9/da/e990ffcd9ec361a68676a5916e391286e1ea5d1b8907ae887e141a71f5/iniconfig-1.1.1-py2.py3-none-any.whl
-itsdangerous @ file:///C:/Users/Jinyoung/AppData/Local/pypoetry/Cache/artifacts/3c/f1/0c/8a71f1217bc7a47b34e2e273a3d34bbf19671b6d17202ac9787937fabf/itsdangerous-2.0.1-py3-none-any.whl
+certifi 
+chardet 
+click 
+colorama 
+Flask 
+gunicorn 
+idna 
+iniconfig 
+itsdangerous 
 Jinja2 
 MarkupSafe 
 packaging 
