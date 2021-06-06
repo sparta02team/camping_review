@@ -15,7 +15,7 @@ CLIENT_SECRET = os.environ['CLIENT_SECRET']
 REST_API = os.environ['REST_API']
 
 # 크롬 드라이버
-CHROME_DRIVER = os.environ['CHROME_DRIVER']
+# CHROME_DRIVER = os.environ['CHROME_DRIVER']
 
 # CALLBACK_URL
 CALLBACK_URL = os.environ['CALLBACK_URL']
