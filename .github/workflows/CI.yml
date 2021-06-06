@@ -32,7 +32,6 @@ jobs:
       - name: Install dependencies
         run: |
           source $HOME/.poetry/env
-          poetry init
           poetry install
       - name: Run image poetry
         uses: abatilo/actions-poetry@v2.0.0
