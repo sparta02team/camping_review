@@ -31,5 +31,6 @@ jobs:
           CALLBACK_URL: ""
           SERVICE_URL: ""
           MONGODB_HOST: "mongodb://localhost:27017"
+          REST_API: ${{ secrets.REST_API }}
         run: |
           pytest
