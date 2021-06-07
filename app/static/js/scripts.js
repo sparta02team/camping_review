@@ -88,6 +88,7 @@ function showArticles()
             if (response["result"] == "success")
             {
                 let articles = response['articles']
+                console.log(articles)
                 for (let i = 0; i < articles.length; i++)
                 {
                     let article = articles[i]
@@ -149,10 +150,14 @@ function to_review()
         data: {
             'mapx': '37.56990106867102',
             'mapy': '126.87186303290376',
-            'title': '난지캠핑장',
+            'camping_site': '난지캠핑장',
             'address': '서울특별시 마포구 한강난지로 28',
-            'url': 'https://yeyak.seoul.go.kr/',
-            'tel': '02-373-2021',
+            'road_address': '도로명 주소',
+            'category': '카테고리',
+            'image': '',
+            'tage':'',
+            'link': 'https://yeyak.seoul.go.kr/',
+            'phone': '02-373-2021',
             'description': '한강의 아름다운 전경과 생태공원이 어울어진 난지캠핑장은 노을공원,하늘공원을 쉽게 다녀올 수 있으며, 여가시간을 즐기고 관광할 수 있는 최적의 수변공간이다.',
         },
         success: function (response)
