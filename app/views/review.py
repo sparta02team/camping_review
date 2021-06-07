@@ -16,14 +16,20 @@ review_data = {'mapx': '', 'mapy': '', 'title': '', 'address': '', 'tel': '', 'd
 def review_page():
     mapx = request.form['mapx']
     mapy = request.form['mapy']
-    title = request.form['title']
+    camping_site = request.form['camping_site']
     address = request.form['address']
-    tel = request.form['tel']
+    road_address = request.form['road_address']
+    category = request.form['category']
+    image = request.form['image']
+    tag = request.form['tag']
+    phone = request.form['phone']
     description = request.form['description']
-    url = request.form['url']
+    link = request.form['link']
+
     global review_data
-    review_data = {'mapx': mapx, 'mapy': mapy, 'title': title, 'address': address, 'tel': tel,
-                   'description': description, 'url': url}
+    review_data = {'mapx': mapx, 'mapy': mapy, 'camping_site': camping_site, 'address': address,
+                   'road_address': road_address, 'phone': phone, 'tag': tag, 'image': image, 'category': category,
+                   'description': description, 'link': link}
 
     return jsonify({'result': 'success', 'data': review_data})
 
