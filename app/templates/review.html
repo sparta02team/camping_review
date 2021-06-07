@@ -584,7 +584,7 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../static/css/review_styles%20.css" rel="stylesheet">
+    <link href="../static/css/review_styles.css" rel="stylesheet">
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=m4e6g61okh"></script>
     <script type="text/javascript"
@@ -594,6 +594,8 @@
     <!-- kakao map-->
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=57214950732ac0e7e06b9ba035d8dc9e"></script>
+    <!-- btn bootstrap -->
+
     <script>
 
         let camping_data
@@ -678,6 +680,8 @@
         $(document).ready(function ()
         {
             get_campingdata()
+            $('#title').focus();
+            $('#text').autosize();
         });
     </script>
 </head>
@@ -786,13 +790,13 @@
             <div id="margin"></div>
             <textarea placeholder="이 곳의 방문 후기를 남겨주세요." id="text" name="text" rows="5"
                       style="overflow: hidden; word-wrap: break-word; resize: none; height: 300px; "></textarea>
-<!--            <br><input id="button" type="submit" value="리뷰작성하기" onclick="makeReview()">-->
-              <div class="container"><p class="m-0 small" onclick="makeReview()">리뷰 작성하기 </p></div>
+            <!--            <br><input id="button" type="submit" value="리뷰작성하기" onclick="makeReview()">-->
+            <div><p class="btn btn-success  btn-lg "  style="margin-top: 10px" onclick="makeReview()">리뷰 작성하기 </p></div>
 
 
         </form>
     </div>
-    <div class="container"><p class="m-0 small">리뷰 작성하기 </p></div>
+
     <div class="container"><p class="m-0 small">Copyright © Guro Series_d team2 Website 2021</p></div>
 </footer>
 <!-- Bootstrap core JS-->

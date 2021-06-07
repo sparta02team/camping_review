@@ -37,6 +37,7 @@ def login():
 
     return render_template('login.html')
 
-@bp.route('/review',methods=['GET'])
+
+@bp.route('/review', methods=['GET'])
 def review():
     return render_template('review.html')
