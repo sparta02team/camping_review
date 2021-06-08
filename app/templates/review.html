@@ -5,6 +5,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Alone_Camping</title>
+
     <style type="text/css">svg:not(:root).svg-inline--fa {
         overflow: visible
     }
@@ -466,7 +467,8 @@
 
     .fad.fa-inverse {
         color: #fff
-    }</style>
+    }
+    </style>
 
     <!-- 리뷰 텍스트 area style -->
     <style>
@@ -576,6 +578,7 @@
         }
     </style>
 
+
     <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico">
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
@@ -613,11 +616,14 @@
                         {
                             camping_data = response['data']
                             console.log(camping_data)
-                            $('#review_address').append(camping_data['address'])
-                            $('#review_title').append(camping_data['title'])
-                            $('#review_tel').append(camping_data['tel'])
+                            $('#review_tag').append(camping_data['tag'])
+                            $('#review_camping_site').append(camping_data['camping_site'])
+                            $('#review_tel').append(camping_data['phone'])
                             $('#review_description').append(camping_data['description'])
-                            $('#review_url').attr('href', camping_data['url'])
+                            $('#review_category').append(camping_data['category'])
+                            $('#review_road_address').append(camping_data['road_address'])
+                            $('#review_link').attr('href', (camping_data['link']))
+                            $('#review_phone').append(camping_data['phone'])
                             // $('#review_img').attr("src", camping_data['img'])
                             // print('img:', camping_data['img'])
                             let mapX = camping_data['mapx']
@@ -654,22 +660,38 @@
         /*
             makeReview() 함수
             - 캠핑데이터(camping_data(dict)),사용자 아이디, 리뷰내용등을 리뷰 db에등록
-
         */
         function makeReview()
         {
-            let review_content = $('#text').val()
+            console.log($('#text').val())
+            let review_text = $('#text').val()
             let user_id = 'test_id'
             $.ajax({
                     type: 'POST',
                     url: '/review/make_review',
-                    data: {camping_data, user_id, review_content},
+                    data: { 'review_text': review_text},
+                        // 'user_id': user_id,
+                       /*
+                        'mapx': camping_data['mapx'],
+                        'mapy': camping_data['mapy'],
+                        'camping_site' :  camping_data['camping_site'],
+                        'address' : camping_data['address'],
+                        'road_address' : camping_data['road_address'],
+                        'category' : camping_data['category'],
+                        'image' : camping_data['image'],
+                        'tag' : camping_data['tag'],
+                        'phone' : camping_data['phone'],
+                        'description' : camping_data['description'],
+                        'link' : camping_data['link']*/
+
                     success: function (response)
                     {
                         if (response['result'] == 'success')
                         {
                             alert('리뷰 등록을 성공했습니다.')
-                            window.location.href('/')
+                        } else
+                        {
+                            alert('실패')
                         }
                     }
 
@@ -681,7 +703,7 @@
         {
             get_campingdata()
             $('#title').focus();
-            $('#text').autosize();
+            // $('#text').autosize();
         });
     </script>
 </head>
@@ -714,8 +736,8 @@
             <div class="product-item-title d-flex">
                 <div class="bg-faded p-5 d-flex ms-auto rounded">
                     <h2 class="section-heading mb-0">
-                        <span class="section-heading-upper" id="review_address"></span>
-                        <span class="section-heading-lower" id="review_title"></span>
+                        <span class="section-heading-upper" id="review_tag"></span>
+                        <span class="section-heading-lower" style="margin-top: 10px" id="review_camping_site"></span>
                     </h2>
                 </div>
             </div>
@@ -727,7 +749,13 @@
             </script>
             <div class="product-item-description d-flex me-auto">
                 <!-- description -->
-                <div class="bg-faded p-5 rounded" id='review_description'><p class="mb-0"></p></div>
+                <div class="bg-faded p-5 rounded" id='review_description'>
+                    <p class="mb-0"></p>
+                    <p id="review_road_address"></p>
+                    <p><a id="review_link">홈페이지 바로가기</a></p>
+                    <p id="review_phone">TEL:</p>
+                    <p id="review_category">카테고리:</p>
+                </div>
             </div>
             <div class="product-item-description d-flex ms-auto">
             </div>
@@ -740,19 +768,18 @@
     <div class="container">
         <div class="product-item">
             <div class="product-item-title d-flex">
-                <!--                <div class="bg-faded p-5 d-flex me-auto rounded">
-                                    <h2 class="section-heading mb-0">
-                                        <span class="section-heading-upper"><a href="https://yeyak.seoul.go.kr">https://yeyak.seoul.go.kr</a></span>
-                                        <span class="section-heading-lower">TEL : 02-373-2021</span>
-                                    </h2>
-                                </div>-->
+                <div class="bg-faded p-5 d-flex me-auto rounded">
+                    <h4 class="section-heading mb-0">
+                        <span class="section-heading-upper">리뷰할 닉네임 </span>
+                    </h4>
+                </div>
             </div>
             <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0"
                  src="../static/assets/img/camping_img.jpeg"
                  alt="..." id="review_img">
-            <div class="product-item-description d-flex ms-auto" align="right">
-                <div class="bg-faded p-5 rounded"><p class="mb-0">
-                    <h2><a href="" id="review_url">홈페이지 바로가기</a><br><span id="review_tel">TEL : </span></p></h2>
+            <div class="product-item-description d-flex ms-auto" style="float: right">
+                <div class="bg-faded p-5 rounded"><p class="mb-0"> 리뷰할 내용
+
                 </div>
             </div>
         </div>
@@ -789,7 +816,7 @@
             <textarea placeholder="이 곳의 방문 후기를 남겨주세요." id="text" name="text" rows="5"
                       style="overflow: hidden; word-wrap: break-word; resize: none; height: 300px; "></textarea>
             <!--            <br><input id="button" type="submit" value="리뷰작성하기" onclick="makeReview()">-->
-            <div><p class="btn btn-success  btn-lg "  style="margin-top: 10px" onclick="makeReview()">리뷰 작성하기 </p></div>
+            <div><p class="btn btn-success  btn-lg " style="margin-top: 10px" onclick="makeReview()">리뷰 작성하기 </p></div>
 
 
         </form>
