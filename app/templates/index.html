@@ -16,25 +16,12 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/static/css/styles.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script>
-        function to_register() {
-            $.ajax({
-                type: 'GET',
-                url: '/register',
-                data: {},
-                success: function (response) {
-                    window.location.href = '/register'
-                }
-            })
-        }
     </script>
 </head>
 
@@ -42,8 +29,8 @@
     <!-- Navigation-->
     <nav class="navbar navbar-light bg-light static-top">
         <div class="container">
-            <a class="navbar-brand" href="#!">ID | Nickname </a>
-            <a class="btn btn-primary" onclick="to_register()">Sign Up</a>
+            <a id="user-info"></a>
+            <a class="btn btn-primary" onclick="to_review()">리뷰</a>
         </div>
     </nav>
     <!-- Masthead-->
@@ -53,64 +40,50 @@
                 <div class="col-xl-6">
                     <div class="text-center text-white">
                         <!-- Page heading-->
-                        <h1 class="mb-5">나 홀로 캠핑! 어디로 떠날까요?</h1>
-                        <!-- Signup form-->
+                        <h1 class="mb-5">
+                            <p>나 홀로 캠핑!</p>
+                            <p>어디로 떠날까요?</p>
+                        </h1>
+                        <!-- form-->
                         <form>
                             <div class="input-group input-group-lg">
-                                <input class="form-control" type="text" placeholder="예시) 서울시" aria-label="예시) 서울시"
-                                    aria-describedby="button-submit" />
-                                <button class="btn btn-primary" id="button-submit" type="button">Search</button>
-                            </div>
-                        </form>
-                    </div>
+                                <select class="form-select" id="region" type="text" aria-describedby="button-submit">
+                                    <option selected> 검색할 지역을 선택하세요. </option>
+                                    <option value="서울시">서울시</option>
+                                    <option value="부산시">부산시</option>
+                                    <option value="대구시">대구시</option>
+                                    <option value="인천시">인천시</option>
+                                    <option value="광주시">광주시</option>
+                                    <option value="대전시">대전시</option>
+                                    <option value="울산시">울산시</option>
+                                    <option value="세종시">세종시</option>
+                                    <option value="경기도">경기도</option>
+                                    <option value="강원도">강원도</option>
+                                    <option value="경상남도">경상남도</option>
+                                    <option value="경상북도">경상북도</option>
+                                    <option value="충청남도">충청남도</option>
+                                    <option value="충청북도">충청북도</option>
+                                    <option value="전라남도">전라남도</option>
+                                    <option value="전라북도">전라북도</option>
+                                    <option value="제주도">제주도</option>
+                                </select>
+                                <button class="btn btn-primary" id="button-submit" type="button"
+                                    onclick="showArticles()">Search</button>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </header>
+
     <!-- Image Showcases-->
-    <section class="showcase">
+    <section class="testimonials text-center bg-light">
         <div class="container">
             <div id="cards-box" class="card-columns">
                 {% for d in data %}
                 <div class="card">
-                    <img class="card-img-top" src="#" alt="Card image cap">
-                    <div class="card-body">
-                        <a href="{{ d['link'] }}" class="card-title">{{ d['campsite_name'] }}</a>
-                        <p class="card-text">{{ d['category'] }}</p>
-                        <p class="card-text">{{ d['address'] }}</p>
-                        <p class="card-text">{{ d['road_address'] }}</p>
-                        <p class="card-text comment"></p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-    <!-- Testimonials-->
-    <section class="testimonials text-center bg-light">
-        <div class="container">
-            <h2 class="mb-5">What people are saying...</h2>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <h5>Margaret E.</h5>
-                        <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <h5>Fred S.</h5>
-                        <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of
-                            super
-                            nice landing pages."</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <h5>Sarah W.</h5>
-                        <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to
-                            us!"</p>
-                    </div>
+                {% endfor %}
                 </div>
             </div>
         </div>
@@ -153,6 +126,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-</body>
 
+</body>
 </html>
