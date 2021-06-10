@@ -1,5 +1,7 @@
 <html lang="ko">
 <head>
+    <!-- DB 에서 캠핑 상세내용과 리뷰 내용을 가져오는 리뷰 게시판 게시글 html -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -603,18 +605,18 @@
 
         let camping_data
 
-        function get_campingdata()
+        function get_campingReview()
         {
 
             $.ajax({
-                    url: '/review/load_data',
+                    url: '/review_page/campingReview',
                     type: 'POST',
-                    data: '',
+                    data: {'index':1},
                     success: function (response)
                     {
                         if (response['result'] == 'success')
                         {
-                            camping_data = response['data']
+                            camping_data = response['camping_data']
                             console.log(camping_data)
                             $('#review_tag').append(camping_data['tag'])
                             $('#review_camping_site').append(camping_data['camping_site'])
@@ -624,8 +626,6 @@
                             $('#review_road_address').append(camping_data['road_address'])
                             $('#review_link').attr('href', (camping_data['link']))
                             $('#review_phone').append(camping_data['phone'])
-                            // $('#review_img').attr("src", camping_data['img'])
-                            // print('img:', camping_data['img'])
                             let mapX = camping_data['mapx']
                             let mapY = camping_data['mapy']
 
@@ -657,52 +657,9 @@
 
         }
 
-        /*
-            makeReview() 함수
-            - 캠핑데이터(camping_data(dict)),사용자 아이디, 리뷰내용등을 리뷰 db에등록
-        */
-        function makeReview()
-        {
-            console.log($('#text').val())
-            let review_text = $('#text').val()
-            let user_id = 'test_id'
-            $.ajax({
-                    type: 'POST',
-                    url: '/review/make_review',
-                    data: {'review_text': review_text},
-                    // 'user_id': user_id,
-                    /*
-                     'mapx': camping_data['mapx'],
-                     'mapy': camping_data['mapy'],
-                     'camping_site' :  camping_data['camping_site'],
-                     'address' : camping_data['address'],
-                     'road_address' : camping_data['road_address'],
-                     'category' : camping_data['category'],
-                     'image' : camping_data['image'],
-                     'tag' : camping_data['tag'],
-                     'phone' : camping_data['phone'],
-                     'description' : camping_data['description'],
-                     'link' : camping_data['link']*/
-
-                    success: function (response)
-                    {
-                        if (response['result'] == 'success')
-                        {
-                            alert('리뷰 등록을 성공했습니다.')
-                        } else
-                        {
-                            alert('실패')
-                        }
-                    }
-
-                }
-            )
-        }
-
-
         $(document).ready(function ()
         {
-            get_campingdata()
+            get_campingReview()
             $('#title').focus();
             // $('#text').autosize();
         });
@@ -726,7 +683,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.html">Home</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="" onclick="review_page()">Reviews</a></li>
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.html">Reviews</a></li>
             </ul>
         </div>
     </div>
@@ -810,19 +767,6 @@
 <!--    </div>-->
 <!--</section>-->
 <footer class="footer text-faded text-center py-5" text-align="center">
-    <div id="wrapper" text-align="center">
-        <form id="paper" method="get" action="" style="text-align: center">
-
-            <div id="margin"></div>
-            <textarea placeholder="이 곳의 방문 후기를 남겨주세요." id="text" name="text" rows="5"
-                      style="overflow: hidden; word-wrap: break-word; resize: none; height: 300px; "></textarea>
-            <!--            <br><input id="button" type="submit" value="리뷰작성하기" onclick="makeReview()">-->
-            <div><p class="btn btn-success  btn-lg " style="margin-top: 10px" onclick="makeReview()">리뷰 작성하기 </p></div>
-
-
-        </form>
-    </div>
-
     <div class="container"><p class="m-0 small">Copyright © Guro Series_d team2 Website 2021</p></div>
 </footer>
 <!-- Bootstrap core JS-->

@@ -1,8 +1,9 @@
 # 리뷰 페이지
 
 # 블루프린트
-from flask import Blueprint, Flask, request, jsonify
+from flask import Blueprint, Flask, request, jsonify, render_template
 from app import db
+
 bp = Blueprint(
     'review',  # 블루프린트 이름
     __name__,  # 파일 등록(현재 파일)
@@ -32,7 +33,7 @@ def review_page():
     global review_data
     review_data = {'mapx': mapx, 'mapy': mapy, 'camping_site': camping_site, 'address': address,
                    'road_address': road_address, 'phone': phone, 'tag': tag, 'image': image, 'category': category,
-                   'description': description, 'link': link, 'user_id':user_id}
+                   'description': description, 'link': link, 'user_id': user_id}
 
     return jsonify({'result': 'success', 'data': review_data})
 
@@ -46,11 +47,19 @@ def load_page():
 
 @bp.route('/make_review', methods=['POST'])
 def make_review():
-
     review_text = request.form['review_text']
 
     review_data['review_text'] = review_text
 
-    # 데이터들을 review게시글 db에 삽입
-    db.review.insert_one(review_data)
+    if db.review.count() == 0:
+        review_data['index'] = 1
+    else:
+        # 인덱싱 필드 작업 필요 일단 삭제 기능 없이 구현
+        index = int(db.review.find_one({'index': db.review.count()})['index'])
+        review_data['index'] = index + 1
+
+    db.review.insert(review_data)
+
     return jsonify({'result': 'success'})
+
+
