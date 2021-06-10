@@ -6,42 +6,31 @@ on: [push, pull_request]
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        poetry-version: [1.1.6]
-
     runs-on: ubuntu-latest
+
     steps:
+      # github actions 라이브러리 이용해서 코드 가져오기
       - name: checkout
         uses: actions/checkout@v2
-      - name: Set up Python 3.9
+      - name: set up python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
       - name: Setup Chromedriver
         uses: nanasess/setup-chromedriver@v1.0.1
-      - name: Start MongoDB
+      - name: set up mongodb
         uses: supercharge/mongodb-github-action@1.4.1
         with:
           mongodb-version: 4.4
-      - name: Install Poetry
-        run: |
-          curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-          source $HOME/.poetry/env
-      - name: Install dependencies
-        run: |
-          source $HOME/.poetry/env
-          poetry install
-      - name: test
+      - name: install requirements
+        run: pip install -r requirements.txt
+      - name: run pytest
         env:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CALLBACK_URL: ""
-          SERVICE_URL: ""
+          NAVER_LOGIN_CLIENT_ID: ${{ secrets.NAVER_LOGIN_CLIENT_ID }}
+          NAVER_LOGIN_CLIENT_SECRET: ${{ secrets.NAVER_LOGIN_CLIENT_SECRET }}
+          NAVER_LOGIN_SERVICE_URL: ""
+          NAVER_LOGIN_CALLBACK_URL: ""
           MONGODB_HOST: "mongodb://localhost:27017"
           REST_API: ${{ secrets.REST_API }}
-        run: |
-          source $HOME/.poetry/env
-          poetry run pytest
+        run: pytest
