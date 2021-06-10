@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url("../assets/img/camping_bg.jpg") no-repeat center;
+    background: url("../assets/img/camping_bg2.jpg") no-repeat center;
     background-size: cover;
 }
 
@@ -49,6 +49,25 @@ body::before {
     margin-top: 0;
 }
 
+.int-area form dt {
+    padding-right: 10px;
+    width: 130px;
+}
+
+.int-area label.warning{
+    color : red !important;
+    animation: warning .3s ease;
+    animation-iteration-count: 3;
+}
+
+.int-area label {
+    position: relative;
+    top: 15px;
+    font-size: 18px;
+    color: #999;
+    transition: all .5s ease;
+}
+
 .int-area input {
     width: 100%;
     padding: 20px 10px 10px;
@@ -58,21 +77,6 @@ body::before {
     font-size: 18px;
     color: #fff;
     outline: none;
-}
-
-.int-area label {
-    position: absolute;
-    left: 10px;
-    top: 15px;
-    font-size: 18px;
-    color: #999;
-    transition: all .5s ease;
-}
-
-.int-area label.warning{
-    color : red !important;
-    animation: warning .3s ease;
-    animation-iteration-count: 3;
 }
 
 @keyframes warning {
@@ -90,13 +94,13 @@ body::before {
 }
 
 .btn-area {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .btn-area button {
     width: 100%;
     height: 50px;
-    background: #404561;
+    background: #4f5050;
     color: #fff;
     font-size: 20px;
     border: none;
@@ -107,10 +111,6 @@ body::before {
 .caption {
     margin-top: 20px;
     text-align: center;
-}
-
-.caption div {
-    margin-top: 30px;
 }
 
 .caption a {
