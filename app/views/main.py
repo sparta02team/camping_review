@@ -30,12 +30,10 @@ def register():
 
 @bp.route('/login', methods=['GET'])
 def login():
-    CLIENT_ID = current_app.config['CLIENT_ID']
-    CALLBACK_URL = current_app.config['CALLBACK_URL']
-    SERVICE_URL = current_app.config['SERVICE_URL']
-    return render_template('login.html', CLIENT_ID=CLIENT_ID, CALLBACK_URL=CALLBACK_URL, SERVICE_URL=SERVICE_URL)
-
-    return render_template('login.html')
+    NAVER_LOGIN_CLIENT_ID = current_app.config['NAVER_LOGIN_CLIENT_ID']
+    NAVER_LOGIN_SERVICE_URL = current_app.config['NAVER_LOGIN_SERVICE_URL']
+    NAVER_LOGIN_CALLBACK_URL = current_app.config['NAVER_LOGIN_CALLBACK_URL']
+    return render_template('login.html', NAVER_LOGIN_CLIENT_ID=NAVER_LOGIN_CLIENT_ID, NAVER_LOGIN_SERVICE_URL=NAVER_LOGIN_SERVICE_URL, NAVER_LOGIN_CALLBACK_URL=NAVER_LOGIN_CALLBACK_URL)
 
 @bp.route('/review',methods=['GET'])
 def review():

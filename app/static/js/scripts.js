@@ -11,21 +11,21 @@ $(document).ready(function () {
 });
 
 
-$(document).ajaxStart(function() {
+$(document).ajaxStart(function () {
     //로딩 중 마우스 커서를 변경
     alert('로딩 중입니다. 잠시만 기다려주세요');
     $('html').css("cursor", "wait");
 });
 
 
-$(document).ajaxStop(function() {
+$(document).ajaxStop(function () {
     //로딩이 끝나면 마우스 커서를 원래대로
     $('html').css("cursor", "auto");
 });
 
 
 function setUserInfo() {
-    let userInfo = $('#user-info')
+    const userInfo = $('#user-info')
     let token = $.cookie('loginToken')
     console.log(token)
 
@@ -39,7 +39,7 @@ function setUserInfo() {
             data: {},
             success: function (response) {
                 if (response['result'] === 'success') {
-                    let id = response['id']
+                    const id = response['id']
                     userInfo.append(`
                         <a class="navbar-brand" href="#">${id}</a>
                         <a class="btn btn-secondary" onclick="logOut()">Log Out</a>
@@ -66,7 +66,7 @@ function to_review() {
     $.ajax({
         type: 'POST',
         url: '/review',
-        data: {'mapx': '300492', 'mapy': '552541', 'title': '난지캠핑장', 'address': '서울특별시 마포구 한강난지로 28'},
+        data: { 'mapx': '300492', 'mapy': '552541', 'title': '난지캠핑장', 'address': '서울특별시 마포구 한강난지로 28' },
         success: function (response) {
             window.location.href = '/review'
         }
@@ -100,8 +100,8 @@ function showArticles() {
                 }
             }
         },
-            error: function (response) {
-                alert('검색에 실패하였습니다.');
+        error: function (response) {
+            alert('검색에 실패하였습니다.');
         }
     })
 }
