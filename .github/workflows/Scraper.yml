@@ -48,5 +48,3 @@ jobs:
         run: |
           cd app/views
           python ./scraper.py
-
-
