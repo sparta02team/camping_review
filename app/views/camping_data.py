@@ -52,7 +52,7 @@ def get_result():
         document['description'] = ''
 
 
-        chrome_driver = os.path.join('chromedriver')
+        chromedriver = os.path.join('chromedriver')
         options = webdriver.ChromeOptions()
         options.add_argument("headless")
         driver = webdriver.Chrome(chromedriver, options=options)
