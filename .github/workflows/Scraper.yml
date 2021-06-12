@@ -4,11 +4,7 @@ name: Scraper
 
 # Controls when the action will run.
 # 참고: https://crontab.guru/examples.html
-on:
-  push:
-    branches: [ feature/map ]
-  pull_request:
-    branches: [ feature/map ]
+on: [push, pull_request]
 
 jobs:
   build:
