@@ -5,27 +5,20 @@ from flask import Blueprint, current_app, request, jsonify
 import time
 import html.parser
 import re
-import os
-from app import db
+from pymongo import MongoClient
 
 
-bp = Blueprint('camping_data', __name__, url_prefix='/camping_data')
+client = MongoClient(MONGODB_HOST)
+db = client.get_database('camping_review')
+db.campsite.remove({})
 
+lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대전시", "울산시", "세종시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도",
+         "경상북도", "경상남도", "제주도"]
 
-@bp.route('/crawling', methods=['GET'])
-def get_result():
-    # form = request.form
-    # region = form['region_give']
-    # region = request.args.get('region_give')
-
-    lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대전시", "울산시", "세종시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도",
-             "경상북도", "경상남도", "제주도"]
-
-    db.campsite.remove({})
-
+try:
     for region in lists:
         url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
-        headers = {"Authorization": "KakaoAK " + current_app.config['REST_API']}
+        headers = {"Authorization": "KakaoAK " + {{ secrets.REST_API }}}
 
         time.sleep(0.1)
 
@@ -57,10 +50,13 @@ def get_result():
             document['description'] = ''
 
             # chrome_driver = os.path.join('chromedriver')
-            chromedriver = current_app.config['CHROME_DRIVER']
             options = webdriver.ChromeOptions()
+            options.add_argument("start-maximized")
             options.add_argument("headless")
-            driver = webdriver.Chrome(chromedriver, options=options)
+            options.add_argument("disable-gpu")
+            options.add_argument("--no-sandbox")
+
+            driver = webdriver.Chrome('chromedriver', options=options)
             driver.get(url)
             driver.implicitly_wait(0.3)
 
@@ -82,21 +78,8 @@ def get_result():
 
             driver.close()
 
+            print(documents)
         db.campsite.insert_many(documents)
 
-    return jsonify({'result': 'success'})
-
-
-@bp.route('', methods=['GET'])
-def list_result():
-    # form = request.form
-    # region = form['region_give']
-    region_give = request.args.get('region_give')
-
-    data = list(db.campsite.find({'region': region_give}, {'_id': False}))
-    result = {
-        'result': 'success',
-        'articles': data,
-    }
-
-    return jsonify(result)
+except Exception as e:
+    print(e)

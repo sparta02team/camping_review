@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Run Scraper - Update data
+
+on:
+  schedule:
+    - cron:  '*/* * 1 * *'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        poetry-version: [1.1.6]
+        python-version: [3.7]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@v1.0.1
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.4.1
+        with:
+          mongodb-version: 4.4
+      - name: Install Poetry
+        run: |
+          curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+          source $HOME/.poetry/env
+      - name: Install dependencies
+        run: |
+          source $HOME/.poetry/env
+          poetry install
+      - name: run scraper
+        env:
+          MONGODB_HOST: "mongodb://localhost:27017"
+          REST_API: ${{ secrets.REST_API }}
+        run: |
+          python ./scraper.py
+
+
