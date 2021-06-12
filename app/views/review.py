@@ -41,7 +41,6 @@ def review_page():
 @bp.route('/load_data', methods=['POST'])
 def load_page():
     global review_data
-    print(review_data['mapx'], review_data['mapy'])
     return jsonify({'result': 'success', 'data': review_data})
 
 
