@@ -37,4 +37,4 @@ jobs:
           REST_API: ${{ secrets.REST_API }}
         run: |
           cd app/views
-          scraper.py
+          python scraper.py
