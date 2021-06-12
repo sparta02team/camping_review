@@ -3,8 +3,7 @@
 name: Run Scraper - Update data
 
 on:
-  schedule:
-    - cron:  '*/* * 1 * *'
+  schedule: every 24 hours
 
 jobs:
   build:
