@@ -30,6 +30,11 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
+    <!-- 네이버 아이디 로그인 js -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8">
+    </script>
+
+
     <script>
         // let id = $('#userid');
         // let pw = $('#userpw');
@@ -58,7 +63,10 @@
                 $.ajax({
                     type: "POST",
                     url: "/api/login",
-                    data: {id_give: id_give, pw_give: pw_give},
+                    data: {
+                        id_give: id_give,
+                        pw_give: pw_give
+                    },
 
                     success: function (response) {
                         if (response['result'] == 'success') {
@@ -73,7 +81,6 @@
                 })
             }
         }
-
     </script>
 
 </head>
@@ -97,22 +104,26 @@
         <div class="caption">
             <a href="">Forgot Password?</a>
             <a href="{{ url_for('main.register') }}">회원이 아니라면?</a>
+            <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+            <div id="naver_id_login"></div>
         </div>
     </section>
 
-{#    <h1>로그인 페이지</h1>#}
-{#    <div>#}
-{#        <div class="form-group">#}
-{#            <label for="userid">ID</label>#}
-{#            <input type="email" class="form-control" id="userid" aria-describedby="emailHelp" placeholder="My ID">#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            <label for="userpw">PW</label>#}
-{#            <input type="password" class="form-control" id="userpw" placeholder="My Password">#}
-{#        </div>#}
-{#        <button class="btn btn-primary" onclick="login()">로그인</button>#}
-{#        <a href="/register">회원이 아니라면?</a>#}
-{#    </div>#}
+    <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+    <script type="text/javascript">
+        var naver_id_login = new naver_id_login(
+            "{{ CLIENT_ID }}", "{{ CALLBACK_URL }}");
+        var state = naver_id_login.getUniqState();
+        naver_id_login.setButton("white", 2, 40);
+        naver_id_login.setDomain("{{ SERVICE_URL }}");
+        naver_id_login.setState(state);
+        // naver_id_login.setPopup();
+        naver_id_login.init_naver_id_login();
+
+        function addUser(snsEmail, snsName, snsCd) {
+            
+        }
+    </script>
 </body>
 
 </html>

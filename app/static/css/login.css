@@ -109,6 +109,10 @@ body::before {
     text-align: center;
 }
 
+.caption div {
+    margin-top: 30px;
+}
+
 .caption a {
     font-size: 15px;
     color: #fff;
