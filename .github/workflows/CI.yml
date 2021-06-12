@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # github actions 라이브러리 이용해서 코드 가져오기
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: set up python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@v1.0.1
+      - name: set up mongodb
+        uses: supercharge/mongodb-github-action@1.4.1
+        with:
+          mongodb-version: 4.4
+      - name: install requirements
+        run: pip install -r requirements.txt
+      - name: run pytest
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CALLBACK_URL: ""
+          SERVICE_URL: ""
+          MONGODB_HOST: "mongodb://localhost:27017"
+          REST_API: ${{ secrets.REST_API }}
+        run: pytest
