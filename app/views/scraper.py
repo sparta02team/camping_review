@@ -20,7 +20,7 @@ lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대�
 try:
     for region in lists:
         url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
-        headers = {"Authorization": "KakaoAK " + {{ secrets.REST_API }}}
+        headers = {"Authorization": "KakaoAK " + os.environ['REST_API']}
 
         time.sleep(0.1)
 
