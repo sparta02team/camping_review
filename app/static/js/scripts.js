@@ -5,46 +5,55 @@
 */
 
 
-$(document).ready(function () {
+$(document).ready(function ()
+{
     // user 정보
     setUserInfo()
 });
 
 
-$(document).ajaxStart(function() {
+$(document).ajaxStart(function ()
+{
     //로딩 중 마우스 커서를 변경
     alert('로딩 중입니다. 잠시만 기다려주세요');
     $('html').css("cursor", "wait");
 });
 
 
-$(document).ajaxStop(function() {
+$(document).ajaxStop(function ()
+{
     //로딩이 끝나면 마우스 커서를 원래대로
     $('html').css("cursor", "auto");
 });
 
 
-function setUserInfo() {
+function setUserInfo()
+{
     let userInfo = $('#user-info')
     let token = $.cookie('loginToken')
     console.log(token)
 
-    if (token === undefined) {
+    if (token === undefined)
+    {
         window.location.href = '/login'
-    } else {
+    } else
+    {
         $.ajax({
             type: "POST",
             url: "/user",
-            headers: { 'authorization': `Bearer ${token}` },
+            headers: {'authorization': `Bearer ${token}`},
             data: {},
-            success: function (response) {
-                if (response['result'] === 'success') {
+            success: function (response)
+            {
+                if (response['result'] === 'success')
+                {
                     let id = response['id']
                     userInfo.append(`
                         <a class="navbar-brand" href="#">${id}</a>
                         <a class="btn btn-secondary" onclick="logOut()">Log Out</a>
                     `)
-                } else {
+                } else
+                {
                     alert('다시 로그인해주세요.')
                     window.location.href = '/login'
                 }
@@ -55,37 +64,30 @@ function setUserInfo() {
 }
 
 
-function logOut() {
-    $.removeCookie('loginToken', { path: '/' })
+function logOut()
+{
+    $.removeCookie('loginToken', {path: '/'})
     alert('로그아웃 되었습니다.')
     window.location.href = '/login'
 }
 
-
-function to_review() {
-    $.ajax({
-        type: 'POST',
-        url: '/review',
-        data: {'mapx': '300492', 'mapy': '552541', 'title': '난지캠핑장', 'address': '서울특별시 마포구 한강난지로 28'},
-        success: function (response) {
-            window.location.href = '/review'
-        }
-    })
-}
-
-
-function showArticles() {
+function showArticles()
+{
     let region = $('.form-select').val()
     console.log(region)
 
     $.ajax({
         type: "GET",
         url: "/camping_data",
-        data: { 'region_give': region },
-        success: function (response) {
-            if (response["result"] == "success") {
+        data: {'region_give': region},
+        success: function (response)
+        {
+            if (response["result"] == "success")
+            {
                 let articles = response['articles']
-                for (let i = 0; i < articles.length; i++) {
+                console.log(articles)
+                for (let i = 0; i < articles.length; i++)
+                {
                     let article = articles[i]
                     let campsite_name = article['campsite_name']
                     let category = article['category']
@@ -100,14 +102,16 @@ function showArticles() {
                 }
             }
         },
-            error: function (response) {
-                alert('검색에 실패하였습니다.');
+        error: function (response)
+        {
+            alert('검색에 실패하였습니다.');
         }
     })
 }
 
 
-function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag) {
+function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
+{
     let tempHtml = `<div class="card">
                         <div class="card-header" style="background-image: url('${image}')">
                             <div class = "card-header-is_closed" ></div>
@@ -133,4 +137,53 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                         </div>
                     </div>`;
     $("#cards-box").append(tempHtml);
+}
+
+function to_review()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/review',
+        data: {
+            'mapx': '37.56990106867102',
+            'mapy': '126.87186303290376',
+            'camping_site': '난지캠핑장',
+            'address': '상암동 495-81',
+            'road_address': '서울 마포구 한강난지로 22 한강시민공원 ',
+            'category': '야영,캠핑장',
+            'image': '이미지',
+            'tag': '#가족캠핑 #글램핑 #단풍명소 #물놀이 #산책로 #오토캠핑 #캠핑장',
+            'link': 'https://yeyak.seoul.go.kr/',
+            'phone': '02-373-2021',
+            'description': '한강의 아름다운 전경과 생태공원이 어울어진 난지캠핑장은 노을공원,하늘공원을 쉽게 다녀올 수 있으며, 여가시간을 즐기고 관광할 수 있는 최적의 수변공간이다.',
+            'user_id': 'test_id'
+        },
+        success: function (response)
+        {
+            if (response['result'] == 'success')
+            {
+                window.location.href = '/review'
+            }
+
+        }
+    })
+}
+
+function to_review_page()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/review_page',
+        data: {'index':4},
+        success: function (response)
+        {
+            if (response['result'] == 'success')
+            {
+                window.location.href = '/review_page'
+            }
+
+        }
+
+
+    })
 }
