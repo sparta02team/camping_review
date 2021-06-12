@@ -3,7 +3,7 @@
 name: Scraper
 
 # Controls when the action will run.
-on:
+on: [push, pull_request]
   schedule: every 24 hours
 
 jobs:
