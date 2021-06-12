@@ -25,5 +25,4 @@ def get_camping_review():
     index = int(index)
 
     camping_data = db.review.find_one({'index': index}, {'_id': False})
-
     return jsonify({'result': 'success', 'camping_data': camping_data})

@@ -174,7 +174,7 @@ function to_review_page()
     $.ajax({
         type: 'POST',
         url: '/review_page',
-        data: {'index':1},
+        data: {'index':4},
         success: function (response)
         {
             if (response['result'] == 'success')
