@@ -1,3 +1,5 @@
+import os
+
 import requests
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -6,9 +8,9 @@ import time
 import html.parser
 import re
 from pymongo import MongoClient
+import os
 
-
-client = MongoClient(MONGODB_HOST)
+client = MongoClient(os.environ['MONGODB_HOST'])
 db = client.get_database('camping_review')
 db.campsite.remove({})
 
