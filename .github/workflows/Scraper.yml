@@ -3,12 +3,10 @@
 name: Scraper
 
 # Controls when the action will run.
+# 참고: https://crontab.guru/examples.html
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  schedule: every 24 hours
+  schedule:
+    - cron: '* * * * *'
 
 jobs:
   build:
@@ -47,4 +45,4 @@ jobs:
           REST_API: ${{ secrets.REST_API }}
         run: |
           cd app/views
-          python ./scraper.py
+          scraper.py
