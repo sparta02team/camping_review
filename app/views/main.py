@@ -2,7 +2,6 @@ from flask import Blueprint, current_app, request, render_template, session
 import jwt
 from app import db
 
-
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
@@ -37,6 +36,12 @@ def login():
 
     return render_template('login.html')
 
-@bp.route('/review',methods=['GET'])
+
+@bp.route('/review', methods=['GET'])
 def review():
     return render_template('review.html')
+
+
+@bp.route('/review_page', methods=['GET'])
+def review_page():
+    return render_template('review_page.html')
