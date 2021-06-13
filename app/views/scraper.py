@@ -1,9 +1,7 @@
 import os
-
 import requests
 from selenium import webdriver
 from selenium.webdriver import ActionChains
-from flask import Blueprint, current_app, request, jsonify
 import time
 import html.parser
 import re
