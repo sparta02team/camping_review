@@ -4379,6 +4379,14 @@ img.card-link {
     margin-bottom: 5px;
 }
 
+.card-body-road-address {
+	color: #2F170F;
+    text-align: center ;
+	font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .card-body-footer {
   	position: absolute;
   	margin-top: 10px;

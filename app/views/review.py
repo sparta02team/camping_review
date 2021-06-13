@@ -17,23 +17,25 @@ review_data = {'mapx': '', 'mapy': '', 'camping_site': '', 'address': '',
 
 @bp.route('', methods=['POST'])
 def review_page():
-    mapx = request.form['mapx']
-    mapy = request.form['mapy']
     camping_site = request.form['camping_site']
-    address = request.form['address']
-    road_address = request.form['road_address']
-    category = request.form['category']
-    image = request.form['image']
-    tag = request.form['tag']
-    phone = request.form['phone']
-    description = request.form['description']
-    link = request.form['link']
-    user_id = request.form['user_id']
+    # mapx = request.form['mapx']
+    # mapy = request.form['mapy']
+    # address = request.form['address']
+    # road_address = request.form['road_address']
+    # category = request.form['category']
+    # image = request.form['image']
+    # tag = request.form['tag']
+    # phone = request.form['phone']
+    # description = request.form['description']
+    # link = request.form['link']
+    # user_id = request.form['user_id']
+
+    data = list(db.campsite.find({'campsite_name': camping_site}, {'_id': False}))
 
     global review_data
-    review_data = {'mapx': mapx, 'mapy': mapy, 'camping_site': camping_site, 'address': address,
-                   'road_address': road_address, 'phone': phone, 'tag': tag, 'image': image, 'category': category,
-                   'description': description, 'link': link, 'user_id': user_id}
+    review_data = {'mapx': data[0]['x'], 'mapy': data[0]['y'], 'camping_site': data[0]['campsite_name'], 'address': data[0]['address'],
+                   'road_address': data[0]['road_address'], 'phone': data[0]['phone'], 'tag': data[0]['tag'], 'image': data[0]['image'], 'category': data[0]['category'],
+                   'description': data[0]['description'], 'link': data[0]['link'], 'user_id': 'user_id'}
 
     return jsonify({'result': 'success', 'data': review_data})
 
