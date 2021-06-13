@@ -134,7 +134,7 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                                 </p>
                             <div class="card-body-footer">
                                 <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment"></i>리뷰 작성
+                                <i class="icon icon-comment" onclick="to_review()"></i>리뷰 작성
                                 <i class="icon icon-comments_count"></i>리뷰 개수
                             </div>
                         </div>
