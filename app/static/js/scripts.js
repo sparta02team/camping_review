@@ -75,6 +75,7 @@ function showArticles()
 {
     let region = $('.form-select').val()
     console.log(region)
+    $("#cards-box").html("")
 
     $.ajax({
         type: "GET",
