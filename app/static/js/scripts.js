@@ -112,6 +112,7 @@ function showArticles()
 
 function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
 {
+
     let tempHtml = `<div class="card">
                         <div class="card-header" style="background-image: url('${image}')">
                             <div class = "card-header-is_closed" ></div>
@@ -139,13 +140,7 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
     $("#cards-box").append(tempHtml);
 }
 
-function to_review()
-{
-    $.ajax({
-        type: 'POST',
-        url: '/review',
-        data: {
-            'mapx': '37.56990106867102',
+let data = {'mapx': '37.56990106867102',
             'mapy': '126.87186303290376',
             'camping_site': '난지캠핑장',
             'address': '상암동 495-81',
@@ -156,8 +151,15 @@ function to_review()
             'link': 'https://yeyak.seoul.go.kr/',
             'phone': '02-373-2021',
             'description': '한강의 아름다운 전경과 생태공원이 어울어진 난지캠핑장은 노을공원,하늘공원을 쉽게 다녀올 수 있으며, 여가시간을 즐기고 관광할 수 있는 최적의 수변공간이다.',
-            'user_id': 'test_id'
-        },
+            'user_id': 'test_id'}
+
+
+function to_review(data)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/review',
+        data: data,
         success: function (response)
         {
             if (response['result'] == 'success')
@@ -174,7 +176,7 @@ function to_review_page()
     $.ajax({
         type: 'POST',
         url: '/review_page',
-        data: {'index':4},
+        data: {'index':5},
         success: function (response)
         {
             if (response['result'] == 'success')

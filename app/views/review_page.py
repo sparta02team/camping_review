@@ -15,7 +15,6 @@ index = 0
 def review_page():
     global index
     index = request.form['index']
-
     return jsonify({'result': 'success'})
 
 

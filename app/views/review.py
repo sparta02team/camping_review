@@ -1,6 +1,8 @@
 # 리뷰 페이지
 
 # 블루프린트
+import os
+
 from flask import Blueprint, Flask, request, jsonify, render_template
 from app import db
 
@@ -62,3 +64,14 @@ def make_review():
     return jsonify({'result': 'success'})
 
 
+@bp.route('/upload_img', methods=['POST'])
+def upload_img():
+    global review_data
+    print(review_data)
+    f = request.files['file']
+    print(f)
+    # f = form['img'][0]
+    # 저장할 경로 + 파일명
+    f.save(os.getcwd()+'/app/static/assets/review_img/'+ str(review_data['index']) + '.jpg')
+
+    return jsonify({'result': 'success'})
