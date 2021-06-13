@@ -4255,7 +4255,7 @@ textarea.form-control-lg {
 }
 
 .card {
-	height: 550px;
+	height: 700px;
 	width: 350px;
 	border-radius: 15px;
 	display: inline-block;
@@ -4279,6 +4279,10 @@ textarea.form-control-lg {
 	border-radius: 15px 15px 0 0;
 	background-size: 100% 280px;
 	background-repeat: no-repeat;
+}
+
+span.card-category {
+  color: #999999;
 }
 
 .card-image {
@@ -4327,16 +4331,16 @@ h1 {
 .card-body-description  {
     opacity: 0;
     color: #757B82;
-    line-height: 25px;
     -webkit-transition: .2s ease-in-out; /*사파리&크롬*/
     -moz-transition: .2s ease-in-out; /*파이어폭스*/
     -ms-transition: .2s ease-in-out; /*익스플로러*/
     -o-transition: .2s ease-in-out; /*오페라*/
     transition : .2s ease-in-out;
     overflow: hidden;
-	height: 180px;
-	margin: 5px 20px;
-    margin-bottom: 15px;
+	height: 150px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    line-height: 200%;
 }
 
 .card:hover .card-body-description {
@@ -4349,21 +4353,35 @@ h1 {
     overflow: scroll;
 }
 
-.card-body-hashtag {
+img.card-link {
+    width: 50px !important;
+    height: 50px !important;
+	background: url("../assets/img/website_logo.jpg") no-repeat center center;
+    border: 0px;
+    text-align: right;
+}
+
+.card-text-hashtag {
 	color: rgb(255, 7, 110);
     text-align: center ;
 	font-style: italic;
+}
+
+.card-body-phone {
+    margin-top: 3px;
 }
 
 .card-body-address {
 	color: #2F170F;
     text-align: center ;
 	font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .card-body-footer {
   	position: absolute;
-  	margin-top: 15px;
+  	margin-top: 10px;
   	margin-bottom: 6px;
     bottom: 0;
     width: 314px;
@@ -4379,15 +4397,15 @@ h1 {
 }
 
 .icon-comment {
-    width: 25px;
-    height: 17px;
+    width: 27px;
+    height: 27px;
 	background: url("../assets/img/write_comment.jpg") no-repeat;
 }
 
 .icon-comments_count {
-	margin-left: 10px;
+	margin-left: 50px;
 	width: 25px;
-    height: 17px;
+    height: 25px;
 	background: url("../assets/img/comment.jpg") no-repeat;
 }
 
@@ -4416,6 +4434,7 @@ h1 {
 }
 
 .card-title {
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
