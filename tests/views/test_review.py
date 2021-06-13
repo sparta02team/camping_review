@@ -1,17 +1,17 @@
 def test_review_page(client):
     data = {
-        'mapx': '100',
-        'mapy': '100',
-        'camping_site': 'camping_site',
-        'address': '서울시',
-        'road_address': '구로구',
-        'category': '카테고리',
-        'image': 'image',
-        'tag': 'tag',
-        'phone': '010-1111-1111',
-        'description': '좋은 곳입네다',
-        'link': 'www.naver.com',
-        'user_id': 'test_id'
+        'camping_site': 'camping_site'
+        # 'mapx': '100',
+        # 'mapy': '100',
+        # 'address': '서울시',
+        # 'road_address': '구로구',
+        # 'category': '카테고리',
+        # 'image': 'image',
+        # 'tag': 'tag',
+        # 'phone': '010-1111-1111',
+        # 'description': '좋은 곳입네다',
+        # 'link': 'www.naver.com',
+        # 'user_id': 'test_id'
     }
     response = client.post(
         '/review',
