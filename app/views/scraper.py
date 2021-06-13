@@ -1,3 +1,5 @@
+import os
+
 import requests
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -6,9 +8,9 @@ import time
 import html.parser
 import re
 from pymongo import MongoClient
+import os
 
-
-client = MongoClient(MONGODB_HOST)
+client = MongoClient(os.environ['MONGODB_HOST'])
 db = client.get_database('camping_review')
 db.campsite.remove({})
 
@@ -18,7 +20,7 @@ lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대�
 try:
     for region in lists:
         url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
-        headers = {"Authorization": "KakaoAK " + {{ secrets.REST_API }}}
+        headers = {"Authorization": "KakaoAK " + os.environ['REST_API']}
 
         time.sleep(0.1)
 

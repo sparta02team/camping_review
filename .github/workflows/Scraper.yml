@@ -4,16 +4,13 @@ name: Scraper
 
 # Controls when the action will run.
 # 참고: https://crontab.guru/examples.html
-on:
-  schedule:
-    - cron: '* * * * *'
+on: [push, pull_request]
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        poetry-version: [1.1.6]
         python-version: [3.7]
 
     runs-on: ubuntu-latest
@@ -31,18 +28,13 @@ jobs:
         uses: supercharge/mongodb-github-action@1.4.1
         with:
           mongodb-version: 4.4
-      - name: Install Poetry
+      - name: install requirements
         run: |
-          curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-          source $HOME/.poetry/env
-      - name: Install dependencies
-        run: |
-          source $HOME/.poetry/env
-          poetry install
+          pip install -r requirements.txt
       - name: run scraper
         env:
           MONGODB_HOST: "mongodb://localhost:27017"
           REST_API: ${{ secrets.REST_API }}
         run: |
           cd app/views
-          scraper.py
+          python scraper.py
