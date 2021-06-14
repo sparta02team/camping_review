@@ -71,6 +71,7 @@ function logOut()
     window.location.href = '/login'
 }
 
+
 function showArticles()
 {
     let region = $('.form-select').val()
@@ -135,7 +136,7 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                             <div class="card-body-footer">
                                 <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
                                 <i class="icon icon-comment" onclick="to_review(this)"></i>리뷰 작성
-                                <i class="icon icon-comments_count"></i>리뷰 개수
+                                <i class="icon icon-comments_count" title=></i>리뷰 개수
                             </div>
                         </div>
                     </div>`;
@@ -178,6 +179,7 @@ function to_review(e)
     })
 }
 
+
 function to_review_page()
 {
     $.ajax({
@@ -196,3 +198,38 @@ function to_review_page()
 
     })
 }
+
+
+$(document).ready(function () {
+    $('i.icon icon-comments_count').onmouseover(function (e)
+    {
+        let index = $(e).parent().parent().parent().index()
+        console.log(index)
+        let camping_site = $('h1.card-title:eq(' + index + ')').text()
+
+        $.ajax({
+            type: "POST",
+            url: "/review/count_review",
+            data: {'camping_site': camping_site},
+            success: function (response) {
+                if (response['result'] == 'success') {
+                    let count = response['articles']
+                    console.log(count)
+
+                    $(e).attr('title', '');
+
+                    $(e).append(`<div id= "tooltip"><div class="tipBody">리뷰 ${count}개</div></div>`)
+
+                    // try {
+                    //     let tempHtml = `리뷰 ${count}개`;
+                    //     $("i.icon icon-comments_count").append(tempHtml);
+                    // } catch {
+                    //     let tempHtml = `리뷰 개수`;
+                    //     $("i.icon icon-comments_count").append(tempHtml);
+                    // }
+                }
+            }
+
+        })
+    })
+})
