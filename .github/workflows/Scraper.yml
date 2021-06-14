@@ -4,7 +4,10 @@ name: Scraper
 
 # Controls when the action will run.
 # 참고: https://crontab.guru/examples.html
-on: [push, pull_request]
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
 
 jobs:
   build:

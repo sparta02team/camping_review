@@ -75,6 +75,7 @@ function showArticles()
 {
     let region = $('.form-select').val()
     console.log(region)
+    $("#cards-box").html("")
 
     $.ajax({
         type: "GET",
@@ -117,21 +118,23 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                             <div class = "card-header-is_closed" ></div>
                         </div>
                         <div class="card-body">
-                            <div class="card-body-header">
-                                <span class="card-header">${category}</span>
-                                <h1 class="card-title">${campsite_name}</h1>
-                                <a href="${link}" class="card-title">${link}</a>
+                            <div class= "card-body-header">
+                                <span class= "card-category">${category}</span>
+                                <h1 class= "card-title">${campsite_name}</h1>
+                                <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
+                                <hr style="opacity: 0.4; border-color: #FF5675">
                                 <p class="card-text-hashtag">${tag}</p>
-                                <p class = "card-body-phone">${phone}</p>
-                                <p class = "card-body-address">${address}</p>
-                                <p class = "card-body-address">${road_address}</p>
+                                <p class= "card-body-phone">${phone}</p>
+                                <p class= "card-body-address">${address}</p>
+                                <p class= "card-body-road-address">${road_address}</p>
+                                
                             </div>
                                 <p class="card-body-description">
                                     ${description}
                                 </p>
                             <div class="card-body-footer">
                                 <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment"></i>리뷰 작성
+                                <i class="icon icon-comment" onclick="to_review()"></i>리뷰 작성
                                 <i class="icon icon-comments_count"></i>리뷰 개수
                             </div>
                         </div>
@@ -141,22 +144,27 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
 
 function to_review()
 {
+    let index = $('i.icon icon-comment').index(this)
+    // alert(index)
+    let camping_site =  $('h1.card-title:eq(0)').text()
+    // alert(camping_site)
+
     $.ajax({
         type: 'POST',
         url: '/review',
         data: {
-            'mapx': '37.56990106867102',
-            'mapy': '126.87186303290376',
-            'camping_site': '난지캠핑장',
-            'address': '상암동 495-81',
-            'road_address': '서울 마포구 한강난지로 22 한강시민공원 ',
-            'category': '야영,캠핑장',
-            'image': '이미지',
-            'tag': '#가족캠핑 #글램핑 #단풍명소 #물놀이 #산책로 #오토캠핑 #캠핑장',
-            'link': 'https://yeyak.seoul.go.kr/',
-            'phone': '02-373-2021',
-            'description': '한강의 아름다운 전경과 생태공원이 어울어진 난지캠핑장은 노을공원,하늘공원을 쉽게 다녀올 수 있으며, 여가시간을 즐기고 관광할 수 있는 최적의 수변공간이다.',
-            'user_id': 'test_id'
+            'camping_site': camping_site
+            // 'mapx': '37.56990106867102',
+            // 'mapy': '126.87186303290376',
+            // 'address': address,
+            // 'road_address': $('p.card-body-road-address').val(),
+            // 'category': $('span.card-category').val(),
+            // 'image': '이미지',
+            // 'tag': $('p.card-text-hashtag').val(),
+            // 'link': 'https://yeyak.seoul.go.kr/',
+            // 'phone': $('p.card-body-phone').val(),
+            // 'description': $('p.card-body-description').val(),
+            // 'user_id': 'test_id'
         },
         success: function (response)
         {
