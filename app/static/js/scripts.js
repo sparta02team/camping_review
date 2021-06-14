@@ -103,22 +103,7 @@ function showArticles()
                     let address = article['address']
                     let road_address = article['road_address']
                     let tag = article['tag']
-                    data = {
-                        'mapx': '37.56990106867102',
-                        'mapy': '126.87186303290376',
-                        'camping_site': campsite_name,
-                        'address': address,
-                        'road_address': road_address,
-                        'category': category,
-                        'image': image,
-                        'tag': tag,
-                        'link': link,
-                        'phone': phone,
-                        'description': description,
-                        'user_id': id
-                    }
-                    makeCard(data)
-                    // makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
+                    makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
                 }
             }
         },
@@ -130,55 +115,28 @@ function showArticles()
 }
 
 
-// function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
-function makeCard(data)
+function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
 {
-
-    // let tempHtml = `<div class="card">
-    //                     <div class="card-header" style="background-image: url('${image}')">
-    //                         <div class = "card-header-is_closed" ></div>
-    //                     </div>
-    //                     <div class="card-body">
-    //                         <div class="card-body-header">
-    //                             <span class="card-header">${category}</span>
-    //                             <h1 class="card-title">${campsite_name}</h1>
-    //                             <a href="${link}" class="card-title">${link}</a>
-    //                             <p class="card-text-hashtag">${tag}</p>
-    //                             <p class = "card-body-phone">${phone}</p>
-    //                             <p class = "card-body-address">${address}</p>
-    //                             <p class = "card-body-address">${road_address}</p>
-    //                         </div>
-    //                             <p class="card-body-description">
-    //                                 ${description}
-    //                             </p>
-    //                         <div class="card-body-footer">
-    //                             <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-    //                             <i class="icon icon-comment" id="ReviewBtn"></i>리뷰 작성
-    //                             <i class="icon icon-comments_count"></i>리뷰 개수
-    //                         </div>
-    //                     </div>
-    //                 </div>`;
-    // $("#cards-box").append(tempHtml);
     let tempHtml = `<div class="card">
-                        <div class="card-header" style="background-image: url('${data['image']}')">
+                        <div class="card-header" style="background-image: url('${image}')">
                             <div class = "card-header-is_closed" ></div>
                         </div>
                         <div class="card-body">
                             <div class="card-body-header">
-                                <span class="card-header">${data['category']}</span>
-                                <h1 class="card-title">${data['campsite_name']}</h1>
-                                <a href="${link}" class="card-title">${data['link']}</a>
-                                <p class="card-text-hashtag">${data['tag']}</p>
-                                <p class = "card-body-phone">${data['phone']}</p>
-                                <p class = "card-body-address">${data['address']}</p>
-                                <p class = "card-body-address">${data['road_address']}</p>
+                                <span class="card-header">${category}</span>
+                                <h1 class="card-title">${campsite_name}</h1>
+                                <a href="${link}" class="card-title">${link}</a>
+                                <p class="card-text-hashtag">${tag}</p>
+                                <p class = "card-body-phone">${phone}</p>
+                                <p class = "card-body-address">${address}</p>
+                                <p class = "card-body-address">${road_address}</p>
                             </div>
                                 <p class="card-body-description">
-                                    ${data['description']}
+                                    ${description}
                                 </p>
                             <div class="card-body-footer">
                                 <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment" id="ReviewBtn" onclick="to_review(data)"></i>리뷰 작성
+                                <i class="icon icon-comment"></i>리뷰 작성
                                 <i class="icon icon-comments_count"></i>리뷰 개수
                             </div>
                         </div>
@@ -186,26 +144,30 @@ function makeCard(data)
     $("#cards-box").append(tempHtml);
 }
 
-function to_review(data)
+function to_review()
 {
-     data = {
-        'mapx': '37.56990106867102',
-        'mapy': '126.87186303290376',
-        'camping_site': '난지캠핑장',
-        'address': '상암동 495-81',
-        'road_address': '서울 마포구 한강난지로 22 한강시민공원 ',
-        'category': '야영,캠핑장',
-        'image': '이미지',
-        'tag': '#가족캠핑 #글램핑 #단풍명소 #물놀이 #산책로 #오토캠핑 #캠핑장',
-        'link': 'https://yeyak.seoul.go.kr/',
-        'phone': '02-373-2021',
-        'description': '한강의 아름다운 전경과 생태공원이 어울어진 난지캠핑장은 노을공원,하늘공원을 쉽게 다녀올 수 있으며, 여가시간을 즐기고 관광할 수 있는 최적의 수변공간이다.',
-        'user_id': id
-    }
+    let index = $('i.icon icon-comment').index(this)
+    // alert(index)
+    let camping_site =  $('h1.card-title:eq(0)').text()
+    // alert(camping_site)
+
     $.ajax({
         type: 'POST',
         url: '/review',
-        data: data,
+        data: {
+            'camping_site': camping_site
+            // 'mapx': '37.56990106867102',
+            // 'mapy': '126.87186303290376',
+            // 'address': address,
+            // 'road_address': $('p.card-body-road-address').val(),
+            // 'category': $('span.card-category').val(),
+            // 'image': '이미지',
+            // 'tag': $('p.card-text-hashtag').val(),
+            // 'link': 'https://yeyak.seoul.go.kr/',
+            // 'phone': $('p.card-body-phone').val(),
+            // 'description': $('p.card-body-description').val(),
+            // 'user_id': 'test_id'
+        },
         success: function (response)
         {
             if (response['result'] == 'success')
@@ -222,7 +184,7 @@ function to_review_page()
     $.ajax({
         type: 'POST',
         url: '/review_page',
-        data: {'index': 43},
+        data: {'index':4},
         success: function (response)
         {
             if (response['result'] == 'success')

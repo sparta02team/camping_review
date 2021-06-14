@@ -1,18 +1,19 @@
 import os
-
 import requests
 from selenium import webdriver
 from selenium.webdriver import ActionChains
-from flask import Blueprint, current_app, request, jsonify
 import time
 import html.parser
 import re
 from pymongo import MongoClient
 import os
 
+
 client = MongoClient(os.environ['MONGODB_HOST'])
+rest_api = os.environ['REST_API']
 db = client.get_database('camping_review')
 db.campsite.remove({})
+
 
 lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대전시", "울산시", "세종시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도",
          "경상북도", "경상남도", "제주도"]
@@ -20,7 +21,7 @@ lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대�
 try:
     for region in lists:
         url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
-        headers = {"Authorization": "KakaoAK " + os.environ['REST_API']}
+        headers = {"Authorization": "KakaoAK " + rest_api}
 
         time.sleep(0.1)
 
