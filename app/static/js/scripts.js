@@ -99,7 +99,7 @@ function showArticles()
                     let address = article['address']
                     let road_address = article['road_address']
                     let tag = article['tag']
-                    makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
+                    makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag, i)
                 }
             }
         },
@@ -111,10 +111,10 @@ function showArticles()
 }
 
 
-function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
+function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag, i)
 {
     let tempHtml = `<div class="card">
-                        <div class="card-header" style="background-image: url('${image}')">
+                        <div class="card-header" style="background-image: url('http://${image}')">
                             <div class = "card-header-is_closed" ></div>
                         </div>
                         <div class="card-body">
@@ -134,7 +134,7 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                                 </p>
                             <div class="card-body-footer">
                                 <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment" onclick="to_review()"></i>리뷰 작성
+                                <i class="icon icon-comment" onclick="to_review(this)"></i>리뷰 작성
                                 <i class="icon icon-comments_count"></i>리뷰 개수
                             </div>
                         </div>
@@ -142,12 +142,13 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
     $("#cards-box").append(tempHtml);
 }
 
-function to_review()
+
+function to_review(e)
 {
-    let index = $('i.icon icon-comment').index(this)
-    // alert(index)
-    let camping_site =  $('h1.card-title:eq(0)').text()
-    // alert(camping_site)
+    // console.log($(e).attr('class'))
+    let index = $(e).parent().parent().parent().index()
+    console.log(index)
+    let camping_site =  $('h1.card-title:eq('+ index +')').text()
 
     $.ajax({
         type: 'POST',
