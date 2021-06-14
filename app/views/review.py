@@ -66,3 +66,15 @@ def make_review():
     return jsonify({'result': 'success'})
 
 
+@bp.route('/count_review', methods=['POST'])
+def count_review():
+    camping_site = request.form['camping_site']
+
+    data = db.review.count({'camping_site': camping_site})
+    result = {
+        'result': 'success',
+        'articles': data,
+    }
+
+    return jsonify(result)
+
