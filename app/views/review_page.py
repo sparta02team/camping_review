@@ -18,6 +18,15 @@ def review_page():
     return jsonify({'result': 'success'})
 
 
+@bp.route('/get_review', methods=['POST'])
+def get_review_in_db():
+    print('실행됨')
+    reviews = list(db.review.find({}, {'_id': False}))
+    print(reviews)
+
+    return jsonify({'result': 'success', 'reviews': reviews})
+
+
 @bp.route('/campingReview', methods=['POST'])
 def get_camping_review():
     global index

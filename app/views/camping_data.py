@@ -56,8 +56,8 @@ def get_result():
             document['image'] = ''
             document['description'] = ''
 
-            # chrome_driver = os.path.join('chromedriver')
-            chromedriver = current_app.config['CHROME_DRIVER']
+            chromedriver = os.path.join('chromedriver')
+            # chromedriver = current_app.config['CHROME_DRIVER']
             options = webdriver.ChromeOptions()
             options.add_argument("headless")
             driver = webdriver.Chrome(chromedriver, options=options)

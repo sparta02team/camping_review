@@ -80,6 +80,7 @@ function showArticles()
 {
     let region = $('.form-select').val()
     console.log(region)
+    $("#cards-box").html("")
 
     $.ajax({
         type: "GET",
@@ -89,6 +90,7 @@ function showArticles()
         {
             if (response["result"] == "success")
             {
+
                 let articles = response['articles']
                 console.log(articles)
                 for (let i = 0; i < articles.length; i++)
@@ -122,21 +124,23 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                             <div class = "card-header-is_closed" ></div>
                         </div>
                         <div class="card-body">
-                            <div class="card-body-header">
-                                <span class="card-header">${category}</span>
-                                <h1 class="card-title">${campsite_name}</h1>
-                                <a href="${link}" class="card-title">${link}</a>
+                            <div class= "card-body-header">
+                                <span class= "card-category">${category}</span>
+                                <h1 class= "card-title">${campsite_name}</h1>
+                                <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
+                                <hr style="opacity: 0.4; border-color: #FF5675">
                                 <p class="card-text-hashtag">${tag}</p>
-                                <p class = "card-body-phone">${phone}</p>
-                                <p class = "card-body-address">${address}</p>
-                                <p class = "card-body-address">${road_address}</p>
+                                <p class= "card-body-phone">${phone}</p>
+                                <p class= "card-body-address">${address}</p>
+                                <p class= "card-body-road-address">${road_address}</p>
+                                
                             </div>
                                 <p class="card-body-description">
                                     ${description}
                                 </p>
                             <div class="card-body-footer">
                                 <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment"></i>리뷰 작성
+                                <i class="icon icon-comment" onclick="to_review('${campsite_name}')"></i>리뷰 작성
                                 <i class="icon icon-comments_count"></i>리뷰 개수
                             </div>
                         </div>
@@ -144,11 +148,13 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
     $("#cards-box").append(tempHtml);
 }
 
-function to_review()
+function to_review(campsite_name)
 {
     let index = $('i.icon icon-comment').index(this)
     // alert(index)
-    let camping_site =  $('h1.card-title:eq(0)').text()
+    let camping_site = campsite_name
+    console.log(camping_site)
+    // let camping_site = $('h1.card-title:eq(0)').text()
     // alert(camping_site)
 
     $.ajax({
@@ -179,12 +185,12 @@ function to_review()
     })
 }
 
-function to_review_page()
+function to_review_page(index)
 {
     $.ajax({
         type: 'POST',
         url: '/review_page',
-        data: {'index':4},
+        data: {'index': index},
         success: function (response)
         {
             if (response['result'] == 'success')
@@ -196,4 +202,79 @@ function to_review_page()
 
 
     })
+}
+
+
+function showReviews()
+{
+
+    $("#cards-box").html("")
+
+    $.ajax({
+        type: "POST",
+        url: "/review_page/get_review",
+        success: function (response)
+        {
+            if (response["result"] == "success")
+            {
+
+                let reviews = response['reviews']
+                console.log(reviews)
+
+                for (let i = 0; i < reviews.length; i++)
+                {
+                    let review = reviews[i]
+                    let camping_site = review['camping_site']
+                    let category = review['category']
+                    let description = review['description']
+                    let image = review['image']
+                    let link = review['link']
+                    let phone = review['phone']
+                    let address = review['address']
+                    let road_address = review['road_address']
+                    let tag = review['tag']
+                    let id = review['user_id']
+                    let index = review['index']
+                    makeCard2(camping_site, category, description, image, link, phone, address, road_address, tag, id, index)
+                }
+            }
+        },
+        error: function (response)
+        {
+            alert('검색에 실패하였습니다.');
+        }
+    })
+}
+
+// 작성된 리뷰글을 생성하는 함수
+function makeCard2(campsite_name, category, description, image, link, phone, address, road_address, tag, id, index)
+{
+    let tempHtml = `<div class="card">
+                        <div class="card-header" style="background-image: url('${image}')">
+                            <div class = "card-header-is_closed" ></div>
+                        </div>
+                        <div class="card-body">
+                            <div class= "card-body-header">
+                                <span class= "card-category">${category}</span>
+                                <span class= "card-category">${category}</span>
+                                <h1 class= "card-title">${campsite_name}</h1>
+                                <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
+                                <hr style="opacity: 0.4; border-color: #FF5675">
+                                <p class="card-text-hashtag">${tag}</p>
+                                <p class= "card-body-phone">${phone}</p>
+                                <p class= "card-body-address">${address}</p>
+                                <p class= "card-body-road-address">${road_address}</p>
+                                
+                            </div>
+                                <p class="card-body-description">
+                                    ${description}
+                                </p>
+                            <div class="card-body-footer">
+                                <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
+                                <i class="icon icon-comment" onclick="to_review_page(${index})"></i>리뷰 작성
+                                <i class="icon icon-comments_count"></i>리뷰 개수
+                            </div>
+                        </div>
+                    </div>`;
+    $("#cards-box").append(tempHtml);
 }

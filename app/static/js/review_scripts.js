@@ -23,8 +23,8 @@ function get_campingdata()
                     $('#review_phone').append(camping_data['phone'])
                     // $('#review_img').attr("src", camping_data['img'])
                     // print('img:', camping_data['img'])
-                    let mapX = camping_data['mapx']
-                    let mapY = camping_data['mapy']
+                    let mapX = camping_data['mapy']
+                    let mapY = camping_data['mapx']
 
 
                     var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
