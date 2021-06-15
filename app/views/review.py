@@ -4,6 +4,7 @@
 from flask import Blueprint, Flask, request, jsonify, render_template
 from app import db
 
+
 bp = Blueprint(
     'review',  # 블루프린트 이름
     __name__,  # 파일 등록(현재 파일)
@@ -33,9 +34,10 @@ def review_page():
     data = list(db.campsite.find({'campsite_name': camping_site}, {'_id': False}))
 
     global review_data
-    review_data = {'mapx': data[0]['x'], 'mapy': data[0]['y'], 'camping_site': data[0]['campsite_name'], 'address': data[0]['address'],
-                   'road_address': data[0]['road_address'], 'phone': data[0]['phone'], 'tag': data[0]['tag'], 'image': data[0]['image'], 'category': data[0]['category'],
-                   'description': data[0]['description'], 'link': data[0]['link'], 'user_id': 'user_id'}
+    for d in data:
+        review_data = {'mapx': d['x'], 'mapy': d['y'], 'camping_site': d['campsite_name'], 'address': d['address'],
+                       'road_address': d['road_address'], 'phone': d['phone'], 'tag': d['tag'], 'image': d['image'], 'category': d['category'],
+                       'description': d['description'], 'link': d['link'], 'user_id': 'user_id'}
 
     return jsonify({'result': 'success', 'data': review_data})
 
@@ -63,4 +65,16 @@ def make_review():
 
     return jsonify({'result': 'success'})
 
+
+@bp.route('/count_review', methods=['GET'])
+def count_review():
+    camping_site = request.args.get('camping_site')
+
+    data = db.review.count({'camping_site': camping_site})
+    result = {
+        'result': 'success',
+        'articles': data,
+    }
+
+    return jsonify(result)
 

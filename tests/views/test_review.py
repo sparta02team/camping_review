@@ -1,6 +1,6 @@
 def test_review_page(client):
     data = {
-        'camping_site': 'camping_site'
+        'camping_site': '난지캠핑장'
         # 'mapx': '100',
         # 'mapy': '100',
         # 'address': '서울시',
@@ -13,6 +13,7 @@ def test_review_page(client):
         # 'link': 'www.naver.com',
         # 'user_id': 'test_id'
     }
+
     response = client.post(
         '/review',
         data=data

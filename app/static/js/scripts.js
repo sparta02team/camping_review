@@ -71,6 +71,7 @@ function logOut()
     window.location.href = '/login'
 }
 
+
 function showArticles()
 {
     let region = $('.form-select').val()
@@ -113,41 +114,52 @@ function showArticles()
 
 function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
 {
-    let tempHtml = `<div class="card">
-                        <div class="card-header" style="background-image: url('${image}')">
-                            <div class = "card-header-is_closed" ></div>
-                        </div>
-                        <div class="card-body">
-                            <div class= "card-body-header">
-                                <span class= "card-category">${category}</span>
-                                <h1 class= "card-title">${campsite_name}</h1>
-                                <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
-                                <hr style="opacity: 0.4; border-color: #FF5675">
-                                <p class="card-text-hashtag">${tag}</p>
-                                <p class= "card-body-phone">${phone}</p>
-                                <p class= "card-body-address">${address}</p>
-                                <p class= "card-body-road-address">${road_address}</p>
-                                
-                            </div>
-                                <p class="card-body-description">
-                                    ${description}
-                                </p>
-                            <div class="card-body-footer">
-                                <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment" onclick="to_review()"></i>리뷰 작성
-                                <i class="icon icon-comments_count"></i>리뷰 개수
-                            </div>
-                        </div>
-                    </div>`;
-    $("#cards-box").append(tempHtml);
+    $.ajax({
+    type: "GET",
+    url: "/review/count_review",
+    data: {'camping_site': campsite_name},
+    success: function (response) {
+        if (response["result"] == "success") {
+            let count = response['articles']
+            let tempHtml = `<div class="card">
+                                <div class="card-header" style="background-image: url('${image}')">
+                                    <div class = "card-header-is_closed" ></div>
+                                </div>
+                                <div class="card-body">
+                                    <div class= "card-body-header">
+                                        <span class= "card-category">${category}</span>
+                                        <h1 class= "card-title">${campsite_name}</h1>
+                                        <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
+                                        <hr style="opacity: 0.4; border-color: #FF5675">
+                                        <p class="card-text-hashtag">${tag}</p>
+                                        <p class= "card-body-phone">${phone}</p>
+                                        <p class= "card-body-address">${address}</p>
+                                        <p class= "card-body-road-address">${road_address}</p>
+                                        
+                                    </div>
+                                        <p class="card-body-description">
+                                            ${description}
+                                        </p>
+                                    <div class="card-body-footer">
+                                        <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
+                                        <i class="icon icon-comment" onclick="to_review(this)"></i>리뷰 작성
+                                        <i class="icon icon-comments_count" title=></i>리뷰 ${count}개
+                                    </div>
+                                </div>
+                            </div>`;
+            $("#cards-box").append(tempHtml);
+            }
+        }
+    })
 }
 
-function to_review()
+
+function to_review(e)
 {
-    let index = $('i.icon icon-comment').index(this)
-    // alert(index)
-    let camping_site =  $('h1.card-title:eq(0)').text()
-    // alert(camping_site)
+    // console.log($(e).attr('class'))
+    let index = $(e).parent().parent().parent().index()
+    console.log(index)
+    let camping_site =  $('h1.card-title:eq('+ index +')').text()
 
     $.ajax({
         type: 'POST',
@@ -176,6 +188,7 @@ function to_review()
         }
     })
 }
+
 
 function to_review_page()
 {
