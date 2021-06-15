@@ -113,13 +113,12 @@ def api_register_naver():
     }
     token = jwt.encode(payload, current_app.config['JWT_SECRET'])
     return jsonify({'result': 'success', 'token': token})
-    # return render_template(template_name_or_list)
 
 
 @bp.route('/naver', methods=['GET'])
-def naver_callback():
-    CLIENT_ID = current_app.config['CLIENT_ID']
-    CALLBACK_URL = current_app.config['CALLBACK_URL']
-    SERVICE_URL = current_app.config['SERVICE_URL']
-    return render_template('callback.html', CALLBACK_URL=CALLBACK_URL,
-                           CLIENT_ID=CLIENT_ID, SERVICE_URL=SERVICE_URL)
+def naver_login_callback():
+    NAVER_LOGIN_CLIENT_ID = current_app.config['NAVER_LOGIN_CLIENT_ID']
+    NAVER_LOGIN_CALLBACK_URL = current_app.config['NAVER_LOGIN_CALLBACK_URL']
+    NAVER_LOGIN_SERVICE_URL = current_app.config['NAVER_LOGIN_SERVICE_URL']
+    return render_template('naver_login_callback.html', 
+    NAVER_LOGIN_CLIENT_ID=NAVER_LOGIN_CLIENT_ID, NAVER_LOGIN_SERVICE_URL=NAVER_LOGIN_SERVICE_URL, NAVER_LOGIN_CALLBACK_URL=NAVER_LOGIN_CALLBACK_URL)

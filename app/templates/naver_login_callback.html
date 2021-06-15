@@ -13,7 +13,7 @@
 
 <body>
     <script type="text/javascript">
-        var naver_id_login = new naver_id_login("{{ CLIENT_ID }}", "{{ CALLBACK_URL }}");
+        var naver_id_login = new naver_id_login("{{ NAVER_LOGIN_CLIENT_ID }}", "{{ NAVER_LOGIN_CALLBACK_URL }}");
         // 접근 토큰 값 출력
         // alert(naver_id_login.oauthParams.access_token);
         // 네이버 사용자 프로필 조회
@@ -36,7 +36,9 @@
                     if (response['result'] == 'success') {
                         // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
                         // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
-                        $.cookie('loginToken', response['token'], {'path': '/'});
+                        $.cookie('loginToken', response['token'], {
+                            'path': '/'
+                        });
                         // let snsId = naver_id_login.getProfileData('id');
                         // let snsEmail = naver_id_login.getProfileData('email');
                         // let snsName = snsEmail.substring(0, snsEmail.indexOf('@'));
@@ -51,7 +53,6 @@
                     }
                 }
             })
-            // alert(naver_id_login.getProfileData('email'));
         }
     </script>
 </body>

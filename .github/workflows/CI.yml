@@ -12,7 +12,7 @@ jobs:
       # github actions 라이브러리 이용해서 코드 가져오기
       - name: checkout
         uses: actions/checkout@v2
-      - name: Set up Python 3.9
+      - name: set up python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
@@ -27,10 +27,10 @@ jobs:
       - name: run pytest
         env:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CALLBACK_URL: ""
-          SERVICE_URL: ""
+          NAVER_LOGIN_CLIENT_ID: ${{ secrets.NAVER_LOGIN_CLIENT_ID }}
+          NAVER_LOGIN_CLIENT_SECRET: ${{ secrets.NAVER_LOGIN_CLIENT_SECRET }}
+          NAVER_LOGIN_SERVICE_URL: ""
+          NAVER_LOGIN_CALLBACK_URL: ""
           MONGODB_HOST: "mongodb://localhost:27017"
           REST_API: ${{ secrets.REST_API }}
         run: pytest
