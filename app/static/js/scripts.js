@@ -100,7 +100,7 @@ function showArticles()
                     let address = article['address']
                     let road_address = article['road_address']
                     let tag = article['tag']
-                    makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag, i)
+                    makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
                 }
             }
         },
@@ -112,35 +112,45 @@ function showArticles()
 }
 
 
-function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag, i)
+function makeCard(campsite_name, category, description, image, link, phone, address, road_address, tag)
 {
-    let tempHtml = `<div class="card">
-                        <div class="card-header" style="background-image: url('http://${image}')">
-                            <div class = "card-header-is_closed" ></div>
-                        </div>
-                        <div class="card-body">
-                            <div class= "card-body-header">
-                                <span class= "card-category">${category}</span>
-                                <h1 class= "card-title">${campsite_name}</h1>
-                                <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
-                                <hr style="opacity: 0.4; border-color: #FF5675">
-                                <p class="card-text-hashtag">${tag}</p>
-                                <p class= "card-body-phone">${phone}</p>
-                                <p class= "card-body-address">${address}</p>
-                                <p class= "card-body-road-address">${road_address}</p>
-                                
-                            </div>
-                                <p class="card-body-description">
-                                    ${description}
-                                </p>
-                            <div class="card-body-footer">
-                                <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment" onclick="to_review(this)"></i>리뷰 작성
-                                <i class="icon icon-comments_count" title=></i>리뷰 개수
-                            </div>
-                        </div>
-                    </div>`;
-    $("#cards-box").append(tempHtml);
+    $.ajax({
+    type: "GET",
+    url: "/review/count_review",
+    data: {'camping_site': campsite_name},
+    success: function (response) {
+        if (response["result"] == "success") {
+            let count = response['articles']
+            let tempHtml = `<div class="card">
+                                <div class="card-header" style="background-image: url('http://${image}')">
+                                    <div class = "card-header-is_closed" ></div>
+                                </div>
+                                <div class="card-body">
+                                    <div class= "card-body-header">
+                                        <span class= "card-category">${category}</span>
+                                        <h1 class= "card-title">${campsite_name}</h1>
+                                        <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
+                                        <hr style="opacity: 0.4; border-color: #FF5675">
+                                        <p class="card-text-hashtag">${tag}</p>
+                                        <p class= "card-body-phone">${phone}</p>
+                                        <p class= "card-body-address">${address}</p>
+                                        <p class= "card-body-road-address">${road_address}</p>
+                                        
+                                    </div>
+                                        <p class="card-body-description">
+                                            ${description}
+                                        </p>
+                                    <div class="card-body-footer">
+                                        <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
+                                        <i class="icon icon-comment" onclick="to_review(this)"></i>리뷰 작성
+                                        <i class="icon icon-comments_count" title=></i>리뷰 ${count}개
+                                    </div>
+                                </div>
+                            </div>`;
+            $("#cards-box").append(tempHtml);
+            }
+        }
+    })
 }
 
 
@@ -198,38 +208,3 @@ function to_review_page()
 
     })
 }
-
-
-$(document).ready(function () {
-    $('i.icon icon-comments_count').onmouseover(function (e)
-    {
-        let index = $(e).parent().parent().parent().index()
-        console.log(index)
-        let camping_site = $('h1.card-title:eq(' + index + ')').text()
-
-        $.ajax({
-            type: "POST",
-            url: "/review/count_review",
-            data: {'camping_site': camping_site},
-            success: function (response) {
-                if (response['result'] == 'success') {
-                    let count = response['articles']
-                    console.log(count)
-
-                    $(e).attr('title', '');
-
-                    $(e).append(`<div id= "tooltip"><div class="tipBody">리뷰 ${count}개</div></div>`)
-
-                    // try {
-                    //     let tempHtml = `리뷰 ${count}개`;
-                    //     $("i.icon icon-comments_count").append(tempHtml);
-                    // } catch {
-                    //     let tempHtml = `리뷰 개수`;
-                    //     $("i.icon icon-comments_count").append(tempHtml);
-                    // }
-                }
-            }
-
-        })
-    })
-})
