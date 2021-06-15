@@ -122,7 +122,7 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
         if (response["result"] == "success") {
             let count = response['articles']
             let tempHtml = `<div class="card">
-                                <div class="card-header" style="background-image: url('http://${image}')">
+                                <div class="card-header" style="background-image: url('${image}')">
                                     <div class = "card-header-is_closed" ></div>
                                 </div>
                                 <div class="card-body">
