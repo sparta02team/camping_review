@@ -6,6 +6,7 @@ import time
 import html.parser
 import re
 from pymongo import MongoClient
+import random
 import os
 
 
@@ -46,42 +47,37 @@ try:
 
                 documents.append(document)
 
+        print(documents)
+
         for document in documents:
-            url = document['link']
+            place_id = document['link'].split('/')[-1]
             document['tag'] = []
             document['image'] = ''
             document['description'] = ''
 
-            # chrome_driver = os.path.join('chromedriver')
-            options = webdriver.ChromeOptions()
-            options.add_argument("start-maximized")
-            options.add_argument("headless")
-            options.add_argument("disable-gpu")
-            options.add_argument("--no-sandbox")
-
-            driver = webdriver.Chrome('chromedriver', options=options)
-            driver.get(url)
-            driver.implicitly_wait(0.3)
+            URL_DETAILS_PAGE = "https://place.map.kakao.com/main/v/"
+            place_details = requests.get(URL_DETAILS_PAGE + place_id).json()
 
             try:
-                tags = driver.find_elements_by_xpath("//a[contains(text(),'#') and @class='link_tag']")
+                tags = place_details['basicInfo']['metaKeywordList']
                 for tag in tags:
-                    document['tag'].append(tag.text)
+                    document['tag'].append(tag)
 
-                image = driver.find_element_by_css_selector('a.link_photo').get_attribute('style')
-                # action = ActionChains(driver)
-                # action.move_to_element(image).perform()
-                document['image'] = image.split('background-image: url("')[1][:-3]
+                photo_list = place_details['photo']
 
-                description = driver.find_element_by_css_selector('p.txt_introduce')
-                document['description'] = description.text
+                time.sleep(0.1)
+
+                for p in photo_list['photoList'][0]['list']:
+                    if 'daum' in p['orgurl'] or 'kakao' in p['orgurl']:
+                        document['image'] = p['orgurl']
+                    else:
+                        document['image'] = '../static/assets/img/bg-showcase-' + str(random.randint(1, 5)) + '.jpg'
+                # document['image'] = photo_list['photoList'][0]['list'][0]['orgurl']
+                document['description'] = place_details['basicInfo']['introduction']
 
             except:
                 pass
 
-            driver.close()
-
-            print(documents)
         db.campsite.insert_many(documents)
 
 except Exception as e:
