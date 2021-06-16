@@ -629,8 +629,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" onclick="to_index()">Home</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href=""
-                                                onclick="review_page()">Reviews</a></li>
             </ul>
         </div>
     </div>
@@ -692,20 +690,20 @@
             <div id="margin"></div>
             <textarea placeholder="이 곳의 방문 후기를 남겨주세요." id="text" name="text" rows="5"
                       style="overflow: hidden; word-wrap: break-word; resize: none; height: 300px; "></textarea>
-            <div class="container" style="text-align: center">
-                <p>Share your photos.</p>
+            <div class="container" style="text-align: center; width: 500px; margin-top: 30px">
+                <p>사진을 공유해 주세요</p>
                 <div class="imageupload panel panel-default">
                     <div class="panel-heading clearfix">
-                        <h3 class="panel-title pull-left">Select Image file</h3>
+                        <h3 class="panel-title pull-left">이미지 파일을 선택해 주세요.</h3>
                     </div>
                     <div class="file-tab panel-body">
                         <label class="btn btn-primary btn-file">
-                            <span>Browse</span>
+                            <span>찾아보기</span>
                             <!-- The file is stored here. -->
                             <input type="file" name="image-file" id="image_file">
 
                         </label>
-                        <button type="button" class="btn btn-danger">Delete image</button>
+                        <button type="button" class="btn btn-danger">이미지 삭제하기</button>
                     </div>
                 </div>
 

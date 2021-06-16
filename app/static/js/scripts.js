@@ -15,7 +15,7 @@ $(document).ready(function ()
     setUserInfo()
 });
 
-
+/* 기능변경으로 주석처리
 $(document).ajaxStart(function ()
 {
     //로딩 중 마우스 커서를 변경
@@ -29,7 +29,7 @@ $(document).ajaxStop(function ()
     //로딩이 끝나면 마우스 커서를 원래대로
     $('html').css("cursor", "auto");
 });
-
+*/
 
 function setUserInfo()
 {
@@ -140,7 +140,7 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                                 </p>
                             <div class="card-body-footer">
                                 <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment" onclick="to_review('${campsite_name}')"></i>리뷰 작성
+                                <i class="icon icon-comment" onclick="to_review('${campsite_name}')" style='cursor:pointer;' ></i>리뷰 작성
                                 <i class="icon icon-comments_count"></i>리뷰 개수
                             </div>
                         </div>
@@ -154,6 +154,7 @@ function to_review(campsite_name)
     // alert(index)
     let camping_site = campsite_name
     console.log(camping_site)
+    console.log(id)
     // let camping_site = $('h1.card-title:eq(0)').text()
     // alert(camping_site)
 
@@ -161,18 +162,8 @@ function to_review(campsite_name)
         type: 'POST',
         url: '/review',
         data: {
-            'camping_site': camping_site
-            // 'mapx': '37.56990106867102',
-            // 'mapy': '126.87186303290376',
-            // 'address': address,
-            // 'road_address': $('p.card-body-road-address').val(),
-            // 'category': $('span.card-category').val(),
-            // 'image': '이미지',
-            // 'tag': $('p.card-text-hashtag').val(),
-            // 'link': 'https://yeyak.seoul.go.kr/',
-            // 'phone': $('p.card-body-phone').val(),
-            // 'description': $('p.card-body-description').val(),
-            // 'user_id': 'test_id'
+            'camping_site': camping_site,
+            'user_id': id
         },
         success: function (response)
         {
@@ -249,7 +240,7 @@ function showReviews()
 // 작성된 리뷰글을 생성하는 함수
 function makeCard2(campsite_name, category, description, image, link, phone, address, road_address, tag, id, index)
 {
-    let tempHtml = `<div class="card">
+    let tempHtml = `<div class="card" >
                         <div class="card-header" style="background-image: url('${image}')">
                             <div class = "card-header-is_closed" ></div>
                         </div>
@@ -270,9 +261,12 @@ function makeCard2(campsite_name, category, description, image, link, phone, add
                                     ${description}
                                 </p>
                             <div class="card-body-footer">
-                                <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #FF5675">
-                                <i class="icon icon-comment" onclick="to_review_page(${index})"></i>리뷰 작성
-                                <i class="icon icon-comments_count"></i>리뷰 개수
+                            
+                            <div onclick="to_review_page(${index})" style="cursor:pointer">
+                            <i class="icon icon-comment" ></i>리뷰 보기
+                            </div>
+                            
+                               
                             </div>
                         </div>
                     </div>`;

@@ -29,9 +29,6 @@
     <nav class="navbar navbar-light bg-light static-top">
         <div class="container">
             <a id="user-info"></a>
-{#          <a class="btn btn-primary" onclick="to_review()">리뷰</a>#}
-            <a class="btn btn-primary" onclick="to_review_page()">리뷰 페이지</a>
-
         </div>
     </nav>
     <!-- Masthead-->
@@ -70,11 +67,13 @@
                                 </select>
                                 <button class="btn btn-primary" id="button-submit" type="button"
                                     onclick="showArticles()">Search</button>
-                            </button>
+                                <button class="btn btn-success" id="button-review" type="button"
+                                    onclick="showReviews()">리뷰보기</button>
+
                         </div>
                     </form>
                 </div>
-                    <div><h1><p style="color: white" onclick="showReviews()">리뷰보기</p></h1></div>
+
         </div>
     </header>
 
@@ -104,7 +103,7 @@
                         <li class="list-inline-item">⋅</li>
                         <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
                     </ul>
-                    <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2021. All Rights Reserved.</p>
+                    <p class="text-muted small mb-4 mb-lg-0">Copyright © Guro Series_d team2 Website 2021</p>
                 </div>
                 <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                     <ul class="list-inline mb-0">
