@@ -9,7 +9,7 @@ def test_list_result(client):
         'region_give': '부산시'
     }
     response = client.get(
-        '/camping_data',
+        '/camping_data/',
         data=data
     )
 
