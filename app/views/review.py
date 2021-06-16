@@ -33,7 +33,7 @@ def review_page():
     user_id = request.form['user_id']
 
     data = list(db.campsite.find({'campsite_name': camping_site}, {'_id': False}))
-
+    print(data)
     global review_data
     review_data = {'mapx': data[0]['x'], 'mapy': data[0]['y'], 'camping_site': data[0]['campsite_name'], 'address': data[0]['address'],
                    'road_address': data[0]['road_address'], 'phone': data[0]['phone'], 'tag': data[0]['tag'], 'image': data[0]['image'], 'category': data[0]['category'],
