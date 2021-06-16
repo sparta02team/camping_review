@@ -65,7 +65,10 @@ def get_result():
                 document['tag'].append(tag)
 
             photo_list = place_details['photo']
-            document['image'] = photo_list['photoList'][0]['list'][0]['orgurl']
+            for p in photo_list['photoList'][0]['list']:
+                if 'daum' in p['orgurl'] or 'kakao' in p['orgurl']:
+                    document['image'] = p['orgurl']
+            # document['image'] = photo_list['photoList'][0]['list'][0]['orgurl']
             document['description'] = place_details['basicInfo']['introduction']
 
         except:
