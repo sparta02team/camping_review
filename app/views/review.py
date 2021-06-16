@@ -78,3 +78,16 @@ def upload_img():
     f.save(os.getcwd()+'/app/static/assets/review_img/'+ str(review_data['index']) + '.jpg')
 
     return jsonify({'result': 'success'})
+
+
+@bp.route('/count_review', methods=['GET'])
+def count_review():
+    camping_site = request.args.get('camping_site')
+
+    data = db.review.count({'camping_site': camping_site})
+    result = {
+        'result': 'success',
+        'articles': data,
+    }
+
+    return jsonify(result)
