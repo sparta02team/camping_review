@@ -6,6 +6,7 @@ import time
 import html.parser
 import re
 import os
+import random
 from app import db
 
 
@@ -26,8 +27,6 @@ def get_result():
 
     url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
     headers = {"Authorization": "KakaoAK " + current_app.config['REST_API']}
-
-    time.sleep(0.1)
 
     data = requests.get(url, headers=headers)
     data = data.json()['documents']
@@ -65,9 +64,14 @@ def get_result():
                 document['tag'].append(tag)
 
             photo_list = place_details['photo']
+
+            time.sleep(0.1)
+
             for p in photo_list['photoList'][0]['list']:
                 if 'daum' in p['orgurl'] or 'kakao' in p['orgurl']:
                     document['image'] = p['orgurl']
+                else:
+                    document['image'] = '../static/assets/img/bg-showcase-' + str(random.randint(1, 5)) + '.jpg'
             # document['image'] = photo_list['photoList'][0]['list'][0]['orgurl']
             document['description'] = place_details['basicInfo']['introduction']
 
