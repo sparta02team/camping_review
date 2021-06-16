@@ -20,6 +20,7 @@ review_data = {'mapx': '', 'mapy': '', 'camping_site': '', 'address': '',
 @bp.route('', methods=['POST'])
 def review_page():
     camping_site = request.form['camping_site']
+    user_id = request.form['user_id']
     # mapx = request.form['mapx']
     # mapy = request.form['mapy']
     # address = request.form['address']
@@ -38,7 +39,7 @@ def review_page():
     for d in data:
         review_data = {'mapx': d['x'], 'mapy': d['y'], 'camping_site': d['campsite_name'], 'address': d['address'],
                        'road_address': d['road_address'], 'phone': d['phone'], 'tag': d['tag'], 'image': d['image'], 'category': d['category'],
-                       'description': d['description'], 'link': d['link'], 'user_id': 'user_id'}
+                       'description': d['description'], 'link': d['link'], 'user_id': user_id}
 
     return jsonify({'result': 'success', 'data': review_data})
 
