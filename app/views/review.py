@@ -30,14 +30,15 @@ def review_page():
     # phone = request.form['phone']
     # description = request.form['description']
     # link = request.form['link']
-    user_id = request.form['user_id']
+    # user_id = request.form['user_id']
 
     data = list(db.campsite.find({'campsite_name': camping_site}, {'_id': False}))
-    print(data)
+
     global review_data
-    review_data = {'mapx': data[0]['x'], 'mapy': data[0]['y'], 'camping_site': data[0]['campsite_name'], 'address': data[0]['address'],
-                   'road_address': data[0]['road_address'], 'phone': data[0]['phone'], 'tag': data[0]['tag'], 'image': data[0]['image'], 'category': data[0]['category'],
-                   'description': data[0]['description'], 'link': data[0]['link'], 'user_id': user_id}
+    for d in data:
+        review_data = {'mapx': d['x'], 'mapy': d['y'], 'camping_site': d['campsite_name'], 'address': d['address'],
+                       'road_address': d['road_address'], 'phone': d['phone'], 'tag': d['tag'], 'image': d['image'], 'category': d['category'],
+                       'description': d['description'], 'link': d['link'], 'user_id': 'user_id'}
 
     return jsonify({'result': 'success', 'data': review_data})
 
