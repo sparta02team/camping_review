@@ -87,7 +87,7 @@ def get_result():
     return jsonify(result)
 
 
-@bp.route('', methods=['GET'])
+@bp.route('/', methods=['GET'])
 def list_result():
     # form = request.form
     # region = form['region_give']
