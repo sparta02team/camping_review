@@ -1,6 +1,7 @@
 def test_review_page(client):
     data = {
-        'camping_site': '난지캠핑장'
+        'camping_site': '난지캠핑장',
+        'user_id': 'test'
         # 'mapx': '100',
         # 'mapy': '100',
         # 'address': '서울시',
