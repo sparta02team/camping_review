@@ -1,9 +1,10 @@
 # 리뷰 페이지
 
 # 블루프린트
+import os
+
 from flask import Blueprint, Flask, request, jsonify, render_template
 from app import db
-
 
 bp = Blueprint(
     'review',  # 블루프린트 이름
@@ -19,6 +20,7 @@ review_data = {'mapx': '', 'mapy': '', 'camping_site': '', 'address': '',
 @bp.route('', methods=['POST'])
 def review_page():
     camping_site = request.form['camping_site']
+    user_id = request.form['user_id']
     # mapx = request.form['mapx']
     # mapy = request.form['mapy']
     # address = request.form['address']
@@ -37,7 +39,7 @@ def review_page():
     for d in data:
         review_data = {'mapx': d['x'], 'mapy': d['y'], 'camping_site': d['campsite_name'], 'address': d['address'],
                        'road_address': d['road_address'], 'phone': d['phone'], 'tag': d['tag'], 'image': d['image'], 'category': d['category'],
-                       'description': d['description'], 'link': d['link'], 'user_id': 'user_id'}
+                       'description': d['description'], 'link': d['link'], 'user_id': user_id}
 
     return jsonify({'result': 'success', 'data': review_data})
 
@@ -66,6 +68,19 @@ def make_review():
     return jsonify({'result': 'success'})
 
 
+@bp.route('/upload_img', methods=['POST'])
+def upload_img():
+    global review_data
+    print(review_data)
+    f = request.files['file']
+    print(f)
+    # f = form['img'][0]
+    # 저장할 경로 + 파일명
+    f.save(os.getcwd()+'/app/static/assets/review_img/'+ str(review_data['index']) + '.jpg')
+
+    return jsonify({'result': 'success'})
+
+
 @bp.route('/count_review', methods=['GET'])
 def count_review():
     camping_site = request.args.get('camping_site')
@@ -77,4 +92,3 @@ def count_review():
     }
 
     return jsonify(result)
-

@@ -593,111 +593,13 @@
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=m4e6g61okh&submodules=geocoder"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
     <!-- kakao map-->
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=57214950732ac0e7e06b9ba035d8dc9e"></script>
-    <!-- btn bootstrap -->
+    <script src="../static/js/imageupload.js"></script>
+
 
     <script>
-
-        let camping_data
-
-        function get_campingdata()
-        {
-
-            $.ajax({
-                    url: '/review/load_data',
-                    type: 'POST',
-                    data: '',
-                    success: function (response)
-                    {
-                        if (response['result'] == 'success')
-                        {
-                            camping_data = response['data']
-                            console.log(camping_data)
-                            $('#review_tag').append(camping_data['tag'])
-                            $('#review_camping_site').append(camping_data['camping_site'])
-                            $('#review_tel').append(camping_data['phone'])
-                            $('#review_description').append(camping_data['description'])
-                            $('#review_category').append(camping_data['category'])
-                            $('#review_road_address').append(camping_data['road_address'])
-                            $('#review_link').attr('href', (camping_data['link']))
-                            $('#review_phone').append(camping_data['phone'])
-                            // $('#review_img').attr("src", camping_data['img'])
-                            // print('img:', camping_data['img'])
-                            let mapX = camping_data['mapx']
-                            let mapY = camping_data['mapy']
-
-
-                            var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-                            var options = { //지도를 생성할 때 필요한 기본 옵션
-                                center: new kakao.maps.LatLng(mapX, mapY), //지도의 중심좌표.
-                                level: 3 //지도의 레벨(확대, 축소 정도)
-                            };
-
-                            var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-                            // 마커가 표시될 위치입니다
-                            var markerPosition = new kakao.maps.LatLng(mapX, mapY);
-
-                            // 마커를 생성합니다
-                            var marker = new kakao.maps.Marker({
-                                position: markerPosition,
-                            });
-
-                            // 마커가 지도 위에 표시되도록 설정합니다
-                            marker.setMap(map);
-
-
-                        }
-                    }
-                }
-            )
-
-        }
-
-        /*
-            makeReview() 함수
-            - 캠핑데이터(camping_data(dict)),사용자 아이디, 리뷰내용등을 리뷰 db에등록
-        */
-        function makeReview()
-        {
-            console.log($('#text').val())
-            let review_text = $('#text').val()
-            let user_id = 'test_id'
-            $.ajax({
-                    type: 'POST',
-                    url: '/review/make_review',
-                    data: {'review_text': review_text},
-                    // 'user_id': user_id,
-                    /*
-                     'mapx': camping_data['mapx'],
-                     'mapy': camping_data['mapy'],
-                     'camping_site' :  camping_data['camping_site'],
-                     'address' : camping_data['address'],
-                     'road_address' : camping_data['road_address'],
-                     'category' : camping_data['category'],
-                     'image' : camping_data['image'],
-                     'tag' : camping_data['tag'],
-                     'phone' : camping_data['phone'],
-                     'description' : camping_data['description'],
-                     'link' : camping_data['link']*/
-
-                    success: function (response)
-                    {
-                        if (response['result'] == 'success')
-                        {
-                            alert('리뷰 등록을 성공했습니다.')
-                        } else
-                        {
-                            alert('실패')
-                        }
-                    }
-
-                }
-            )
-        }
 
 
         $(document).ready(function ()
@@ -707,6 +609,7 @@
             // $('#text').autosize();
         });
     </script>
+    <script src="../static/js/review_scripts.js"></script>
 </head>
 <body>
 <header>
@@ -725,8 +628,7 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto">
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.html">Home</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="" onclick="review_page()">Reviews</a></li>
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" onclick="to_index()">Home</a></li>
             </ul>
         </div>
     </div>
@@ -764,7 +666,22 @@
         </div>
 
 </section>
+<style>
+    .imageupload {
+        margin: 20px 0;
+        width: 400px
+    }
+</style>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossOrigin="anonymous">
+<link href="../static/css/imageupload.css" rel="stylesheet">
 
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossOrigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossOrigin="anonymous"></script>
+<script src="../static/js/imageupload.js"></script>
 
 <footer class="footer text-faded text-center py-5" text-align="center">
     <div id="wrapper" text-align="center">
@@ -773,12 +690,35 @@
             <div id="margin"></div>
             <textarea placeholder="이 곳의 방문 후기를 남겨주세요." id="text" name="text" rows="5"
                       style="overflow: hidden; word-wrap: break-word; resize: none; height: 300px; "></textarea>
+            <div class="container" style="text-align: center; width: 500px; margin-top: 30px">
+                <p>사진을 공유해 주세요</p>
+                <div class="imageupload panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title pull-left">이미지 파일을 선택해 주세요.</h3>
+                    </div>
+                    <div class="file-tab panel-body">
+                        <label class="btn btn-primary btn-file">
+                            <span>찾아보기</span>
+                            <!-- The file is stored here. -->
+                            <input type="file" name="image-file" id="image_file">
+
+                        </label>
+                        <button type="button" class="btn btn-danger">이미지 삭제하기</button>
+                    </div>
+                </div>
+
+            </div>
             <div><p class="btn btn-success  btn-lg " style="margin-top: 10px" onclick="makeReview()">리뷰 작성하기 </p></div>
 
 
         </form>
     </div>
+    <script>
+        var $imageupload = $('.imageupload');
+        $imageupload.imageupload();
 
+
+    </script>
     <div class="container"><p class="m-0 small">Copyright © Guro Series_d team2 Website 2021</p></div>
 </footer>
 <!-- Bootstrap core JS-->

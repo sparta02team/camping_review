@@ -628,8 +628,9 @@
                             $('#review_phone').append(camping_data['phone'])
                             $('#review_id').append(camping_data['user_id'])
                             $('#review_text').append(camping_data['review_text'])
-                            let mapX = camping_data['mapx']
-                            let mapY = camping_data['mapy']
+                            $('#review_img').attr('src','../static/assets/review_img/'+camping_data['index']+'.jpg')
+                            let mapX = camping_data['mapy']
+                            let mapY = camping_data['mapx']
 
 
                             var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -730,11 +731,19 @@
             <div class="product-item-title d-flex">
                 <div class="bg-faded p-5 d-flex me-auto rounded">
                     <h4 class="section-heading mb-0">
-                        <span class="section-heading-upper" id="review_id"></span>
+                        <span style="font-size: 13px; font-weight: lighter;">닉네임</span><br>
+                        <span style="font-size: 30px; font-weight: lighter;" id="review_id"></span>
                     </h4>
                 </div>
+
+
+
             </div>
+
+
+
             <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0"
+                 style="width:150%;height:500px;"
                  src="../static/assets/img/camping_img.jpeg"
                  alt="..." id="review_img">
             <div class="product-item-description d-flex ms-auto" style="float: right">

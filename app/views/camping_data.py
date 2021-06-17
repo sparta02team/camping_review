@@ -6,6 +6,7 @@ import time
 import html.parser
 import re
 import os
+import random
 from app import db
 
 
@@ -26,8 +27,6 @@ def get_result():
     for region in lists:
         url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
         headers = {"Authorization": "KakaoAK " + current_app.config['REST_API']}
-
-        time.sleep(0.1)
 
         data = requests.get(url, headers=headers)
         data = data.json()['documents']
@@ -50,44 +49,45 @@ def get_result():
 
                 documents.append(document)
 
+        print(documents)
+
         for document in documents:
-            url = document['link']
+            place_id = document['link'].split('/')[-1]
             document['tag'] = []
             document['image'] = ''
             document['description'] = ''
 
-            # chrome_driver = os.path.join('chromedriver')
-            chromedriver = current_app.config['CHROME_DRIVER']
-            options = webdriver.ChromeOptions()
-            options.add_argument("headless")
-            driver = webdriver.Chrome(chromedriver, options=options)
-            driver.get(url)
-            driver.implicitly_wait(0.3)
+            URL_DETAILS_PAGE = "https://place.map.kakao.com/main/v/"
+            place_details = requests.get(URL_DETAILS_PAGE + place_id).json()
 
             try:
-                tags = driver.find_elements_by_xpath("//a[contains(text(),'#') and @class='link_tag']")
+                tags = place_details['basicInfo']['metaKeywordList']
                 for tag in tags:
-                    document['tag'].append(tag.text)
+                    document['tag'].append(tag)
 
-                image = driver.find_element_by_css_selector('a.link_photo').get_attribute('style')
-                # action = ActionChains(driver)
-                # action.move_to_element(image).perform()
-                document['image'] = image.split('background-image: url("')[1][:-3]
+                photo_list = place_details['photo']
 
-                description = driver.find_element_by_css_selector('p.txt_introduce')
-                document['description'] = description.text
+                time.sleep(0.1)
+
+                for p in photo_list['photoList'][0]['list']:
+                    if 'daum' in p['orgurl'] or 'kakao' in p['orgurl']:
+                        document['image'] = p['orgurl']
+                    else:
+                        document['image'] = '../static/assets/img/bg-showcase-' + str(random.randint(1, 5)) + '.jpg'
+                # document['image'] = photo_list['photoList'][0]['list'][0]['orgurl']
+                document['description'] = place_details['basicInfo']['introduction']
 
             except:
                 pass
 
-            driver.close()
-
         db.campsite.insert_many(documents)
 
-    return jsonify({'result': 'success'})
+    result = {'result': 'success'}
+
+    return jsonify(result)
 
 
-@bp.route('', methods=['GET'])
+@bp.route('/', methods=['GET'])
 def list_result():
     # form = request.form
     # region = form['region_give']

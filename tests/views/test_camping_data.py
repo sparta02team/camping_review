@@ -9,7 +9,7 @@ def test_list_result(client):
         'region_give': '부산시'
     }
     response = client.get(
-        '/camping_data',
+        '/camping_data/',
         data=data
     )
 
@@ -20,6 +20,4 @@ def test_list_result(client):
 
     assert response.status_code == 200
     assert response.json['result'] == 'success'
-
-
 
