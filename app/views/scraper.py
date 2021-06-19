@@ -1,32 +1,30 @@
+import os
 import requests
 from selenium import webdriver
 from selenium.webdriver import ActionChains
-from flask import Blueprint, current_app, request, jsonify
 import time
 import html.parser
 import re
-import os
+from pymongo import MongoClient
 import random
-from app import db
+import os
 
 
-bp = Blueprint('camping_data', __name__, url_prefix='/camping_data')
+client = MongoClient(os.environ['MONGODB_HOST'])
+rest_api = os.environ['REST_API']
+db = client.get_database('camping_review')
+db.campsite.remove({})
 
 
-@bp.route('/crawling', methods=['GET'])
-def get_result():
-    # form = request.form
-    # region = form['region_give']
-    # region = request.args.get('region_give')
+lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대전시", "울산시", "세종시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도",
+         "경상북도", "경상남도", "제주도"]
 
-    lists = ["서울시", "부산시", "대구시", "인천시", "광주시", "대전시", "울산시", "세종시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도",
-             "경상북도", "경상남도", "제주도"]
-
-    db.campsite.remove({})
-
+try:
     for region in lists:
         url = "https://dapi.kakao.com/v2/local/search/keyword.json?query={} 캠핑장&size=9".format(region)
-        headers = {"Authorization": "KakaoAK " + current_app.config['REST_API']}
+        headers = {"Authorization": "KakaoAK " + rest_api}
+
+        time.sleep(0.1)
 
         data = requests.get(url, headers=headers)
         data = data.json()['documents']
@@ -82,21 +80,5 @@ def get_result():
 
         db.campsite.insert_many(documents)
 
-    result = {'result': 'success'}
-
-    return jsonify(result)
-
-
-@bp.route('/', methods=['GET'])
-def list_result():
-    # form = request.form
-    # region = form['region_give']
-    region_give = request.args.get('region_give')
-
-    data = list(db.campsite.find({'region': region_give}, {'_id': False}))
-    result = {
-        'result': 'success',
-        'articles': data,
-    }
-
-    return jsonify(result)
+except Exception as e:
+    print(e)

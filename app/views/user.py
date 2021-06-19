@@ -8,7 +8,7 @@ bp = Blueprint('user', __name__, url_prefix='/user')
 def user_info():
     token_receive = request.headers['authorization']
     token = token_receive.split()[1]
-    print(token)
+    # print(token)
 
     try:
         payload = jwt.decode(token, current_app.config['JWT_SECRET'], algorithms=['HS256'])
