@@ -134,7 +134,7 @@ function makeCard(campsite_name, category, description, image, link, phone, addr
                                     <div class= "card-body-header">
                                         <span class= "card-category">${category}</span>
                                         <h1 class= "card-title">${campsite_name}</h1>
-                                        <a href="${link}"><img class= "card-link" style= "border-style: none;"></a>
+                                        <a href="${link}" target="_blank"><img class= "card-link" style= "border-style: none;"></a>
                                         <hr style="opacity: 0.4; border-color: #FF5675">
                                         <p class="card-text-hashtag">${tag}</p>
                                         <p class= "card-body-phone">${phone}</p>
